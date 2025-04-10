@@ -14,11 +14,15 @@
   "scripts": {
     "build": "tsup"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "numeraire",
+    "stablecoin",
+    "solana",
+    "perena"
+  ],
   "license": "MIT",
-  "homepage": "https://github.com/quineco/numeraire-sdk#readme",
-  "description": "",
+  "homepage": "https://perena.org/",
+  "description": "Perena’s multi-asset stablecoin pool is a novel automated market maker (AMM) that enables seamless creation and swapping of stablecoins while optimizing liquidity and enhancing efficiency across markets",
   "devDependencies": {
     "ts-node": "^10.9.2",
     "tsup": "^8.4.0",
