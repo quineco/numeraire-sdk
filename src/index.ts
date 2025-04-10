@@ -165,7 +165,7 @@ interface SwapOutInfo {
   pairs?: Pair[];
 }
 
-const NodeWallet = require("@coral-xyz/anchor/dist/cjs/nodewallet").default; // classic anchor nonsense: https://github.com/coral-xyz/anchor/issues/1201#issuecomment-1139386841
+const NodeWallet = require("@coral-xyz/anchor/dist/cjs/nodewallet").default;
 
 const state: {
   wallet: typeof NodeWallet;
@@ -426,7 +426,6 @@ export const createPool = async (
     await state.provider.connection.confirmTransaction(txHash, "confirmed");
     return txHash;
   }
-  // console.log(bs58.encode(transaction.serialize()))
   return { call: { rpc }, pool, pairs };
 };
 
@@ -1064,11 +1063,6 @@ export async function readOnly(
     }
   }
   if (!base64) return { value: null }; // if it doesn't exist, return null as well
-
-  // const coder = IdlCoder.fieldLayout(
-  //   { type: returnType },
-  //   Array.from([...(IDL.accounts ?? [])])
-  // );
 
   const coder = IdlCoder.fieldLayout(
     { type: returnType },
