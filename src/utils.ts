@@ -25,25 +25,30 @@ import { Numeraire } from "./idl/numeraire";
 import { InitProps } from "./type";
 
 export const state: {
-    wallet: typeof NodeWallet;
-    provider: AnchorProvider;
-    program: Program<Numeraire>;
-    applyD: boolean;
-  } = {
-    wallet: undefined,
-    provider: undefined,
-    program: undefined,
-    applyD: undefined,
-  };
-  
-export const init = ({ payer = undefined, applyD = true, connection = undefined }: InitProps) => {
+  wallet: typeof NodeWallet;
+  provider: AnchorProvider;
+  program: Program<Numeraire>;
+  applyD: boolean;
+} = {
+  wallet: undefined,
+  provider: undefined,
+  program: undefined,
+  applyD: undefined,
+};
+
+export const init = ({
+  payer = undefined,
+  applyD = true,
+  connection = undefined,
+}: InitProps = {}) => {
   let envProvider;
   if (connection === undefined) {
     envProvider = AnchorProvider.env();
     connection = envProvider.connection;
   }
 
-  state.wallet = payer === undefined ? envProvider?.wallet : new NodeWallet(payer);
+  state.wallet =
+    payer === undefined ? envProvider?.wallet : new NodeWallet(payer);
   state.provider = new AnchorProvider(connection, state.wallet);
   state.program = new Program(IDL as Numeraire, state.provider);
   state.applyD = applyD;
@@ -54,13 +59,13 @@ export const init = ({ payer = undefined, applyD = true, connection = undefined 
 };
 
 export const u64ToF64_LittleEndian = (u64: bigint) => {
-    const buffer = new ArrayBuffer(8);
-    const view = new DataView(buffer);
-    view.setBigUint64(0, u64, true); // Little Endian
-    return view.getFloat64(0, true); // Little Endian
-  }
+  const buffer = new ArrayBuffer(8);
+  const view = new DataView(buffer);
+  view.setBigUint64(0, u64, true); // Little Endian
+  return view.getFloat64(0, true); // Little Endian
+};
 
-  /**
+/**
  * Reinterpret cast a JavaScript Number (f64) to a BigInt (u64) using Little Endian.
  * @param {number} num - The floating-point number to convert.
  * @returns {BigInt} - The 64-bit unsigned integer representation.
@@ -70,12 +75,12 @@ export const f64ToU64_LittleEndian = (num) => {
   const view = new DataView(buffer);
   view.setFloat64(0, num, true); // true for Little Endian
   return view.getBigUint64(0, true).toString(); // true for Little Endian
-}
-  
+};
+
 export async function readOnly(
   instruction: TransactionInstruction,
   instructionName: string,
-  connection: Connection,
+  connection: Connection
 ): Promise<{ value: any }> {
   // Filter through your IDL to get the actual read instruction schema and return type
   const ixx = IDL.instructions.find((i) => i.name == instructionName);
@@ -113,7 +118,7 @@ export async function readOnly(
     // Read through all the transaction logs.
     const returnPrefix = `Program return: ${this.program.programId} `;
     const returnLogEntry = sim.value.logs!.find((log) =>
-      log.startsWith(returnPrefix),
+      log.startsWith(returnPrefix)
     );
 
     if (returnLogEntry) {
@@ -124,32 +129,32 @@ export async function readOnly(
 
   const coder = IdlCoder.fieldLayout(
     { type: returnType },
-    Array.from([...(IDL.types ?? [])]) as IdlTypeDef[],
+    Array.from([...(IDL.types ?? [])]) as IdlTypeDef[]
   );
 
   return { value: coder.decode(base64) }; // convert the base64 to the correct return type
 }
 
-  /// If a given ata already exists, it will not be created again and the transaction will be free
+/// If a given ata already exists, it will not be created again and the transaction will be free
 export const createATAsForPoolsIfNeeded = async (
-    pools: Record<string, string>,
-  ) => {
+  pools: Record<string, string>
+) => {
   for (const [poolName, poolAddress] of Object.entries(pools)) {
     const pool = await getPoolKeys(new PublicKey(poolAddress)).catch(
       (error) => {
         console.error(`Error processing pool ${poolName}:`, error);
         throw error; // Re-throw to trigger early return
-      },
+      }
     );
     console.log(
-      `Creating ATAs for ${poolName} for wallet ${state.wallet.publicKey.toString()}`,
+      `Creating ATAs for ${poolName} for wallet ${state.wallet.publicKey.toString()}`
     );
 
     for (const pair of pool.pairs) {
       console.log(`Creating ATA for xMint: ${pair.xMint.toString()}`);
 
       const accountInfo = await state.provider.connection.getAccountInfo(
-        pair.xMint,
+        pair.xMint
       );
 
       const ata = getAssociatedTokenAddressSync(
@@ -157,7 +162,7 @@ export const createATAsForPoolsIfNeeded = async (
         state.wallet.publicKey,
         false,
         accountInfo.owner,
-        ASSOCIATED_TOKEN_PROGRAM_ID,
+        ASSOCIATED_TOKEN_PROGRAM_ID
       );
 
       const ix = createAssociatedTokenAccountIdempotentInstruction(
@@ -165,14 +170,14 @@ export const createATAsForPoolsIfNeeded = async (
         ata, // ata
         state.wallet.publicKey, // owner
         pair.xMint, // mint
-        accountInfo.owner, // program id
+        accountInfo.owner // program id
       );
 
       const tx = new Transaction().add(ix);
       await state.provider.sendAndConfirm(tx).catch((error) => {
         console.error(
           `Error creating ATA for ${pair.xMint.toString()}:`,
-          error,
+          error
         );
         throw error;
       });
@@ -187,7 +192,7 @@ export const decodeReturnData = (returnData: string) => {
   const coder = IdlCoder.fieldLayout(
     { type: "u64" },
     // @ts-ignore
-    Array.from([...(IDL.accounts ?? [])]),
+    Array.from([...(IDL.accounts ?? [])])
   );
   return coder.decode(base64);
 };
