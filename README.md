@@ -35,7 +35,7 @@ in and out arguements of determines the direction of swap.
 
 ```ts
 import { PublicKey } from "@solana/web3.js";
-import { init, swapExactIn, PRODUCTION_POOLS } from "../sdk";
+import { init, swapExactIn, PRODUCTION_POOLS } from "@perena/numeraire-sdk";
 
 (async () => {
   let state = init({ applyD: false });
@@ -62,7 +62,7 @@ import {
   addLiquidity,
   loadKeypairFromFile,
   PRODUCTION_POOLS,
-} from "../sdk";
+} from "@perena/numeraire-sdk";
 
 (async () => {
   init({ payer: loadKeypairFromFile("./keypair.json") });
@@ -81,7 +81,7 @@ import {
 
 ```ts
 import { PublicKey } from "@solana/web3.js";
-import { init, removeLiquidity, PRODUCTION_POOLS } from "../sdk";
+import { init, removeLiquidity, PRODUCTION_POOLS } from "@perena/numeraire-sdk";
 
 (async () => {
   init({ applyD: false });
