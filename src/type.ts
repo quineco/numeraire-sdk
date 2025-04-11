@@ -1,6 +1,7 @@
-import { PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey } from "@solana/web3.js";
 import { Numeraire } from "./idl/numeraire";
 import { MethodsBuilder } from "@coral-xyz/anchor/dist/cjs/program/namespace/methods";
+import { Wallet } from "@coral-xyz/anchor";
 export interface PairInfo {
   amount: number;
   mint: PublicKey;
@@ -92,3 +93,15 @@ export interface SwapOutInfo {
   hints?: number[];
   pairs?: Pair[];
 }
+
+export type InitProps = {
+  payer?: Wallet | any;
+  applyD?: boolean;
+  connection?: Connection;
+};
+
+export type MyAccount = {
+  pubkey: PublicKey;
+  isWritable: boolean;
+  isSigner: boolean;
+};

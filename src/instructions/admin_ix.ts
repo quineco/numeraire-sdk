@@ -16,7 +16,7 @@ import {
   multiSigAddress,
   NORMALIZED_VALUE_DECIMALS,
 } from "./../constant";
-import { Pair, PairInfo, PoolInfo } from "../type";
+import { MyAccount, Pair, PairInfo, PoolInfo } from "../type";
 import { f64ToU64_LittleEndian, state } from "../utils";
 import { getLiqAccounts } from "../getters";
 import { exec } from "child_process";
@@ -155,7 +155,7 @@ export const createPool = async (
     }
   }
 
-  const remainingAccounts = [];
+  const remainingAccounts: MyAccount[] = [];
   pairs.forEach((pair) => {
     // stable
     remainingAccounts.push({
