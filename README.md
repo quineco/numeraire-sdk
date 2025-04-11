@@ -31,8 +31,6 @@ The SDK provides you with off-chain helpers to call the Numéraire program.
 
 ### Swap
 
-in and out arguements of determines the direction of swap.
-
 ```ts
 import { PublicKey } from "@solana/web3.js";
 import { init, swapExactIn, PRODUCTION_POOLS } from "@perena/numeraire-sdk";
