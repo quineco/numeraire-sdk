@@ -25,6 +25,18 @@ This composable structure isolates risks and optimizes swaps by connecting estab
 - **Seed Pool**
 - **Growth Pools**.
 
+## USD\* Price Calculation
+
+The current price of USD\* can be calculated with the help of SDK by following steps:
+
+- Simulate an **add_liquidity** call from the SDK with USDC, USDT, PYUSD on seed pool from an account
+- Get the amount of USD\* minted during **add_liquidity** to that account
+- Now, we have Total amount of tokens deposited and amount of USD\* minted during **add_liquidity**
+
+```
+USD_Star_Price = Total_Token_Deposited / USD_Star_Minted
+```
+
 The SDK provides you with off-chain helpers to call the Numéraire program.
 
 ## User Examples
