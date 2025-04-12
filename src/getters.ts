@@ -13,8 +13,9 @@ import { ID, MAX_STABLES_PER_POOL, NUMERAIRE_CONFIG_ID } from "./constant";
 import { state } from "./utils";
 
 export const getNumeraireConfig = async (fetchWhitelistedAddr = false) => {
-  const conf =
-    await state.program.account.numeraireConfig.fetch(NUMERAIRE_CONFIG_ID);
+  const conf = await state.program.account.numeraireConfig.fetch(
+    NUMERAIRE_CONFIG_ID
+  );
 
   // decode rates
   const rates = [];
@@ -42,7 +43,7 @@ export const getNumeraireConfig = async (fetchWhitelistedAddr = false) => {
 
   if (fetchWhitelistedAddr) {
     conf["poolWhitelistedCreator"] = new PublicKey(
-      conf["padding"].slice(0, 32),
+      conf["padding"].slice(0, 32)
     );
   }
 
@@ -53,7 +54,7 @@ export const getNumeraireConfig = async (fetchWhitelistedAddr = false) => {
 
 export const getPairState = async (pair: PublicKey) => {
   const p = (await state.program.account.virtualStablePair.fetch(
-    pair,
+    pair
   )) as unknown as Pair;
 
   if ("padding" in p) delete p.padding;
@@ -65,7 +66,7 @@ export const getPairState = async (pair: PublicKey) => {
 
   p.xVaultBalance = Number(
     (await state.provider.connection.getTokenAccountBalance(p.xVault)).value
-      .amount,
+      .amount
   );
 
   const bnProto = BN.prototype.toJSON;
@@ -81,7 +82,7 @@ export const getPairState = async (pair: PublicKey) => {
 export const getPoolKeys = async (
   pool: PublicKey,
   all = false,
-  accBuffer = undefined,
+  accBuffer = undefined
 ): Promise<PoolInfo> => {
   let data;
   if (accBuffer === undefined) {
@@ -89,7 +90,7 @@ export const getPoolKeys = async (
   } else {
     data = state.program.coder.accounts.decode(
       "stablePool",
-      Buffer.from(accBuffer, "base64"),
+      Buffer.from(accBuffer, "base64")
     );
   }
 
@@ -112,7 +113,7 @@ export const getPoolKeys = async (
 export const getLiqAccounts = async (
   pool: PublicKey,
   poolKeys = undefined,
-  excludedTokens: number[] = [],
+  excludedTokens: number[] = []
 ) => {
   const poolData = poolKeys || (await getPoolKeys(pool));
 
@@ -141,7 +142,7 @@ export const getLiqAccounts = async (
             pair.xMint,
             state.wallet.publicKey,
             true,
-            pair.xIs2022 === 0 ? TOKEN_PROGRAM_ID : TOKEN_2022_PROGRAM_ID,
+            pair.xIs2022 === 0 ? TOKEN_PROGRAM_ID : TOKEN_2022_PROGRAM_ID
           ),
       isSigner: false,
       isWritable: true,
