@@ -232,7 +232,7 @@ export const createPool = async (
     await state.provider.connection.confirmTransaction(txHash, "confirmed");
     return txHash;
   }
-  return { call: { rpc }, pool, pairs };
+  return { call, pool, pairs };
 };
 
 export const setWhitelistedAdder = async ({
