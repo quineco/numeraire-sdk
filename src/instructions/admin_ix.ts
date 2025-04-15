@@ -104,11 +104,11 @@ export const createPair = async (
         adder_token_account ||
         getAssociatedTokenAddressSync(
           mint,
-          multiSigAddress,
-          true,
+          state.wallet.publicKey,
+          false,
           spl_2022 ? TOKEN_2022_PROGRAM_ID : TOKEN_PROGRAM_ID,
         ),
-      payer: multiSigAddress,
+      payer: state.wallet.publicKey,
       tokenProgram: spl_2022 ? TOKEN_2022_PROGRAM_ID : TOKEN_PROGRAM_ID,
     } as any);
 
