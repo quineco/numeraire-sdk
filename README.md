@@ -39,7 +39,11 @@ USD_Star_Price = Total_Token_Deposited / USD_Star_Minted
 
 The SDK provides you with off-chain helpers to call the Numéraire program.
 
-## User Examples
+## User Guide
+
+While integrating with Numéraire program and in general to build a optimal transaction its important to simulate the transactions and to set a proper Compute Unit Price and Limit. [Guide](https://solana.com/developers/guides/advanced/how-to-request-optimal-compute) to build Optimal transaction on Solana using @solana-developers/helpers
+
+## Examples
 
 ### Swap
 
