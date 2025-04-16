@@ -41,7 +41,7 @@ The SDK provides you with off-chain helpers to call the Numéraire program.
 
 ## User Guide
 
-While integrating with Numéraire program and in general to build a optimal transaction its important to simulate the transactions and to set a proper Compute Unit Price and Limit. [Guide](https://solana.com/developers/guides/advanced/how-to-request-optimal-compute) to build Optimal transaction on Solana using @solana-developers/helpers
+While integrating with Numéraire program and in general to build a optimal transaction its important to simulate the transactions and to set a proper Compute Unit Price and Limit. [Guide](https://solana.com/developers/guides/advanced/how-to-request-optimal-compute) to build Optimal transaction on Solana using @solana-developers/helpers, or simply use the helper buildOptimalTransaction available in the SDK.
 
 ## Examples
 
