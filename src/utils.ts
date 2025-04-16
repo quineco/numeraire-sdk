@@ -8,6 +8,7 @@ import {
   Connection,
   Transaction,
   Keypair,
+  AddressLookupTableAccount,
 } from "@solana/web3.js";
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
@@ -23,6 +24,7 @@ import { AnchorProvider, setProvider, Program } from "@coral-xyz/anchor";
 const NodeWallet = require("@coral-xyz/anchor/dist/cjs/nodewallet").default;
 import { Numeraire } from "./idl/numeraire";
 import { InitProps } from "./type";
+import { addComputeInstructions } from "@solana-developers/helpers";
 
 export const state: {
   wallet: typeof NodeWallet;
@@ -201,4 +203,29 @@ export const loadKeypairFromFile = (filename: string): Keypair => {
   const secret = JSON.parse(fs.readFileSync(filename).toString()) as number[];
   const secretKey = Uint8Array.from(secret);
   return Keypair.fromSecretKey(secretKey);
+};
+
+export const buildOptimalTransaction = async (
+  connection: Connection,
+  instructions: Array<TransactionInstruction>,
+  payer: PublicKey,
+  lookupTables: Array<AddressLookupTableAccount> = []
+) => {
+  const updatedInstructions = await addComputeInstructions(
+    connection,
+    instructions,
+    lookupTables,
+    payer,
+    null,
+    { multiplier: 1.1 } // compute unit buffer default adds 10%
+  );
+
+  const msg = new TransactionMessage({
+    instructions: [...updatedInstructions],
+    payerKey: payer,
+    recentBlockhash: (await state.provider.connection.getLatestBlockhash())
+      .blockhash,
+  }).compileToV0Message(lookupTables);
+  const tx = new VersionedTransaction(msg);
+  return tx;
 };
