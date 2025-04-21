@@ -24,6 +24,7 @@
   "homepage": "https://perena.org/",
   "description": "Perena’s multi-asset stablecoin pool is a novel automated market maker (AMM) that enables seamless creation and swapping of stablecoins while optimizing liquidity and enhancing efficiency across markets",
   "devDependencies": {
+    "@types/node-fetch": "^2.6.12",
     "ts-node": "^10.9.2",
     "tsup": "^8.4.0",
     "typescript": "^5.8.3"
@@ -34,7 +35,8 @@
     "@solana/spl-token": "^0.4.13",
     "@solana/web3.js": "^1.98.0",
     "@types/bn.js": "^5.1.6",
-    "bn.js": "^5.2.1"
+    "bn.js": "^5.2.1",
+    "node-fetch": "^3.3.2"
   },
   "author": "perena",
   "bugs": {
