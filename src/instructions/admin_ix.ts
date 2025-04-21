@@ -20,6 +20,7 @@ import { MyAccount, Pair, PairInfo, PoolInfo } from "../type";
 import { f64ToU64_LittleEndian, state } from "../utils";
 import { getLiqAccounts } from "../getters";
 import { exec } from "child_process";
+import fetch from "node-fetch";
 
 export const createPair = async (
   {
@@ -43,44 +44,28 @@ export const createPair = async (
   if (a !== b || beta !== 1 / alpha) throw new Error("need a=b");
 
   let trueAlpha: number = await new Promise((res, err) => {
-    // Define your Python code as a template literal
-    const pythonCode = `
-  from sympy import factor, simplify, idiff, solve
-  from sympy.abc import x, y, A, a, b
+    // Calculate normalized values using the same logic as before
+    const normalizedA = state.applyD ? A : A / Math.pow(10, NORMALIZED_VALUE_DECIMALS);
+    const normalizedAb = state.applyD ? a : a / Math.pow(10, NORMALIZED_VALUE_DECIMALS);
 
-  def eval_ab(Aval: float, ab: float):
-      invar = x - A / (x + a) + y - A / (y + b) - (2 - A / (1 + a) - A / (1 + b))
-      when_eq = invar.subs(b, a)
-      p_x_when_eq = factor(simplify(idiff(when_eq, y, x)), deep=True).subs(a**2 + 2*a*y + y**2, (y + a)**2)
+    // Construct the URL with query parameters
+    const url = `https://sympy-eight.vercel.app/eval_ab?A=${normalizedA}&ab=${normalizedAb}&apply_d=true`;
 
-      ysol = solve(when_eq.subs(x, 0).subs(A, Aval), y)[1]
-
-      res = -1 * p_x_when_eq.subs(x, 0).subs(y, ysol).evalf(subs={ A: Aval, a: ab })
-      return 1 / res
-
-  # Note: this line below is not equivalent to A * dNorm, it is doing the opposite
-  print(eval_ab(${state.applyD ? A : A / 10 ** NORMALIZED_VALUE_DECIMALS}, ${
-    state.applyD ? a : a / 10 ** NORMALIZED_VALUE_DECIMALS
-  }))
-  `;
-    const cmd = `python3 -c ${JSON.stringify(pythonCode)}`.replace(
-      /\\n/g,
-      "\n",
-    );
-
-    exec(cmd, (error, stdout, stderr) => {
-      if (error) {
-        console.error(`Execution error: ${error.message}`);
-        return err(error);
-      }
-
-      if (stderr) {
-        console.error(`Standard Error: ${stderr}`);
-        return err(stderr);
-      }
-
-      return res(parseFloat(stdout));
-    });
+    // Use fetch API instead of Python exec
+    fetch(url)
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Request failed with status ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((data) => {
+          return res(parseFloat(data.result));
+        })
+        .catch((error) => {
+          console.error(`Request error: ${error.message}`);
+          return err(error);
+        });
   });
 
   if (Math.abs(trueAlpha - alpha) > 0.00001)
