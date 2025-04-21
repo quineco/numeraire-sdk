@@ -57,8 +57,8 @@ import { init, swapExactIn, PRODUCTION_POOLS } from "@perena/numeraire-sdk";
 
   const { call } = await swapExactIn({
     pool: new PublicKey(PRODUCTION_POOLS.susd),
-    in: 1,
-    out: 0,
+    in: 1, // pair index of 'in' token, can also use the mint address as string
+    out: 0, // pair index of 'out' token, can also use the mint address as string
     exactAmountIn: 100_000,
     minAmountOut: 99_000,
     cuLimit: 1500000,

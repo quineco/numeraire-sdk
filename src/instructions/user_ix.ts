@@ -1,4 +1,10 @@
-import { PublicKey, ComputeBudgetProgram } from "@solana/web3.js";
+import {
+  PublicKey,
+  ComputeBudgetProgram,
+  VersionedTransaction,
+  TransactionInstruction,
+  TransactionMessage,
+} from "@solana/web3.js";
 import {
   TOKEN_2022_PROGRAM_ID,
   TOKEN_PROGRAM_ID,
@@ -17,6 +23,7 @@ import {
   USE_ENTIRE_IN_ACCOUNT_AMOUNT,
 } from "../constant";
 import { state } from "../utils";
+import { addComputeInstructions } from "@solana-developers/helpers";
 
 export const addLiquidity = async (info: AddInfo) => {
   const {
@@ -35,7 +42,7 @@ export const addLiquidity = async (info: AddInfo) => {
   const { accounts, pool, remainingAccounts } = await getLiqAccounts(
     poolKey,
     undefined,
-    excludedTokens,
+    excludedTokens
   );
 
   const maxAmountsInBN = [];
@@ -97,8 +104,8 @@ export const removeLiquidity = async (info: RemoveInfo) => {
     out === undefined
       ? MAX_STABLES_PER_POOL
       : typeof out === "number"
-        ? out
-        : poolKeys.pairs.findIndex((p) => p.xMint.toString() === out);
+      ? out
+      : poolKeys.pairs.findIndex((p) => p.xMint.toString() === out);
 
   const excludedTokens = poolKeys.pairs
     .map((p, i) => (i === outIndex ? undefined : i))
@@ -107,7 +114,7 @@ export const removeLiquidity = async (info: RemoveInfo) => {
   const { accounts, pool, remainingAccounts } = await getLiqAccounts(
     poolKey,
     poolKeys,
-    outIndex === MAX_STABLES_PER_POOL ? [] : excludedTokens,
+    outIndex === MAX_STABLES_PER_POOL ? [] : excludedTokens
   );
 
   const minAmountsOut = Array(MAX_STABLES_PER_POOL).fill(new BN(0));
@@ -136,7 +143,7 @@ export const removeLiquidity = async (info: RemoveInfo) => {
 
 export const removeAllLiquidity = async (
   { pool }: { pool: PublicKey },
-  poolKeys = undefined,
+  poolKeys = undefined
 ) => {
   const { accounts, remainingAccounts } = await getLiqAccounts(pool, poolKeys);
   const call = await state.program.methods
@@ -146,7 +153,6 @@ export const removeAllLiquidity = async (
 
   return { call };
 };
-
 
 export const swapExactIn = async (info: SwapInInfo, quote: boolean = false) => {
   const {
@@ -173,12 +179,12 @@ export const swapExactIn = async (info: SwapInInfo, quote: boolean = false) => {
   const lpPair = () => ({
     xMint: PublicKey.findProgramAddressSync(
       [pool.toBuffer(), LIQUIDITY_SEED],
-      ID,
+      ID
     )[0],
     xVault: null,
     decimals,
     xIs2022: Number(
-      LP_TOKEN_PROGRAM.toString() === TOKEN_2022_PROGRAM_ID.toString(),
+      LP_TOKEN_PROGRAM.toString() === TOKEN_2022_PROGRAM_ID.toString()
     ),
   });
 
@@ -192,7 +198,7 @@ export const swapExactIn = async (info: SwapInInfo, quote: boolean = false) => {
           () =>
             lpPair().xMint.toString() === inId
               ? MAX_STABLES_PER_POOL
-              : undefined,
+              : undefined
         );
   const outIndex =
     typeof outId === "number"
@@ -202,7 +208,7 @@ export const swapExactIn = async (info: SwapInInfo, quote: boolean = false) => {
           () =>
             lpPair().xMint.toString() === outId
               ? MAX_STABLES_PER_POOL
-              : undefined,
+              : undefined
         );
 
   const inPair =
@@ -254,7 +260,7 @@ export const swapExactIn = async (info: SwapInInfo, quote: boolean = false) => {
           inPair.xMint,
           state.wallet ? state.wallet.publicKey : DEFAULT_PUBLIC_KEY,
           true,
-          inPair.xIs2022 === 0 ? TOKEN_PROGRAM_ID : TOKEN_2022_PROGRAM_ID,
+          inPair.xIs2022 === 0 ? TOKEN_PROGRAM_ID : TOKEN_2022_PROGRAM_ID
         ),
       outMint: outPair.xMint,
       outVault: outPair.xVault,
@@ -264,11 +270,173 @@ export const swapExactIn = async (info: SwapInInfo, quote: boolean = false) => {
           outPair.xMint,
           state.wallet ? state.wallet.publicKey : DEFAULT_PUBLIC_KEY,
           true,
-          outPair.xIs2022 === 0 ? TOKEN_PROGRAM_ID : TOKEN_2022_PROGRAM_ID,
+          outPair.xIs2022 === 0 ? TOKEN_PROGRAM_ID : TOKEN_2022_PROGRAM_ID
         ),
       payer: state.wallet ? state.wallet.publicKey : DEFAULT_PUBLIC_KEY,
     } as any)
     .preInstructions(preInstructions);
 
   return { call };
+};
+
+export const swapExactInOptimalCUTransaction = async (
+  info: SwapInInfo,
+  quote: boolean = false
+) => {
+  const {
+    pool,
+    exactAmountIn: exactAmountInInput,
+    minAmountOut: minAmountOutInput,
+    in: inId,
+    out: outId,
+    inTrader,
+    outTrader,
+    cuLimit = undefined,
+    requireCuIx = true,
+    decimals,
+  } = info;
+  if (info.pairs === undefined) info.pairs = (await getPoolKeys(pool)).pairs;
+  if (info.hints === undefined)
+    info.hints = Array(MAX_STABLES_PER_POOL).fill(0);
+
+  if (info.hints.length !== 4 && info.hints.length !== 10)
+    throw new Error("Hints should be length 4/10 number array");
+
+  const hinted = info.hints.some((h) => h !== 0);
+
+  const lpPair = () => ({
+    xMint: PublicKey.findProgramAddressSync(
+      [pool.toBuffer(), LIQUIDITY_SEED],
+      ID
+    )[0],
+    xVault: null,
+    decimals,
+    xIs2022: Number(
+      LP_TOKEN_PROGRAM.toString() === TOKEN_2022_PROGRAM_ID.toString()
+    ),
+  });
+
+  const notNeg1 = (v, otherwise) => (v !== -1 ? v : otherwise());
+
+  const inIndex =
+    typeof inId === "number"
+      ? inId
+      : notNeg1(
+          info.pairs.findIndex((p) => p.xMint.toString() === inId),
+          () =>
+            lpPair().xMint.toString() === inId
+              ? MAX_STABLES_PER_POOL
+              : undefined
+        );
+  const outIndex =
+    typeof outId === "number"
+      ? outId
+      : notNeg1(
+          info.pairs.findIndex((p) => p.xMint.toString() === outId),
+          () =>
+            lpPair().xMint.toString() === outId
+              ? MAX_STABLES_PER_POOL
+              : undefined
+        );
+
+  const inPair =
+    inIndex !== MAX_STABLES_PER_POOL ? info.pairs[inIndex] : lpPair();
+  const outPair =
+    outIndex !== MAX_STABLES_PER_POOL ? info.pairs[outIndex] : lpPair();
+
+  const inD = state.applyD ? 10 ** inPair.decimals : 1;
+  const outD = state.applyD ? 10 ** outPair.decimals : 1;
+  const normD = state.applyD ? 10 ** NORMALIZED_VALUE_DECIMALS : 1;
+
+  if (typeof inPair.xIs2022 !== "number" || typeof outPair.xIs2022 !== "number")
+    throw new Error("xIs2022 is not a number");
+
+  const exactAmountIn =
+    exactAmountInInput == USE_ENTIRE_IN_ACCOUNT_AMOUNT
+      ? USE_ENTIRE_IN_ACCOUNT_AMOUNT
+      : new BN(exactAmountInInput * inD);
+
+  const minAmountOut = new BN(minAmountOutInput * outD);
+
+  const preInstructions = requireCuIx
+    ? [ComputeBudgetProgram.setComputeUnitLimit({ units: cuLimit })]
+    : [];
+
+  const method = `swapExactIn${quote ? "Quote" : hinted ? "Hinted" : ""}`;
+  const call = await state.program.methods[method]({
+    exactAmountIn,
+    minAmountOut,
+    inIndex,
+    outIndex,
+    ...(quote || hinted
+      ? {
+          hints: [
+            ...info.hints.map((h) => new BN(h * normD)),
+            ...Array(MAX_STABLES_PER_POOL - info.hints.length).fill(new BN(0)),
+          ],
+          pathHints: Array(MAX_STABLES_PER_POOL).fill(0),
+        }
+      : {}),
+  }).accounts({
+    pool,
+    inMint: inPair.xMint,
+    inVault: inPair.xVault,
+    inTrader:
+      inTrader ??
+      getAssociatedTokenAddressSync(
+        inPair.xMint,
+        state.wallet ? state.wallet.publicKey : DEFAULT_PUBLIC_KEY,
+        true,
+        inPair.xIs2022 === 0 ? TOKEN_PROGRAM_ID : TOKEN_2022_PROGRAM_ID
+      ),
+    outMint: outPair.xMint,
+    outVault: outPair.xVault,
+    outTrader:
+      outTrader ??
+      getAssociatedTokenAddressSync(
+        outPair.xMint,
+        state.wallet ? state.wallet.publicKey : DEFAULT_PUBLIC_KEY,
+        true,
+        outPair.xIs2022 === 0 ? TOKEN_PROGRAM_ID : TOKEN_2022_PROGRAM_ID
+      ),
+    payer: state.wallet ? state.wallet.publicKey : DEFAULT_PUBLIC_KEY,
+  } as any);
+
+  let swap_ix: TransactionInstruction[] = (await call.transaction())
+    .instructions;
+  let ixs: TransactionInstruction[];
+
+  if (requireCuIx) {
+    if (cuLimit == undefined) {
+      ixs = await addComputeInstructions(
+        state.provider.connection,
+        swap_ix,
+        [],
+        state.wallet.publicKey,
+        null,
+        { multiplier: 1.1 } // compute unit buffer default adds 10%
+      );
+    } else {
+      ixs = await addComputeInstructions(
+        state.provider.connection,
+        swap_ix,
+        [],
+        state.wallet.publicKey,
+        null,
+        { fixed: cuLimit }
+      );
+    }
+  } else {
+    ixs = swap_ix;
+  }
+
+  const msg = new TransactionMessage({
+    instructions: [...ixs],
+    payerKey: state.wallet.publicKey,
+    recentBlockhash: (await state.provider.connection.getLatestBlockhash())
+      .blockhash,
+  }).compileToV0Message();
+  const tx = new VersionedTransaction(msg);
+
+  return tx;
 };
