@@ -49,7 +49,7 @@ export const createPair = async (
     const normalizedAb = state.applyD ? a : a / Math.pow(10, NORMALIZED_VALUE_DECIMALS);
 
     // Construct the URL with query parameters
-    const url = `https://sympy-eight.vercel.app/eval_ab?A=${normalizedA}&ab=${normalizedAb}&apply_d=true`;
+    const url = `https://sympy-eight.vercel.app/eval_ab?A=${normalizedA}&a=${normalizedAb}&apply_d=true`;
 
     // Use fetch API instead of Python exec
     fetch(url)
