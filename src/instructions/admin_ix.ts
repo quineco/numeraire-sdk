@@ -60,7 +60,7 @@ export const createPair = async (
           return response.json();
         })
         .then((data) => {
-          return res(parseFloat(data.result));
+          return res(parseFloat(data["result"]));
         })
         .catch((error) => {
           console.error(`Request error: ${error.message}`);
