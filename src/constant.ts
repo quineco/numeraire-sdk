@@ -12,6 +12,9 @@ export const PRODUCTION_POOLS = {
   usdy: "Gi3dGkokskdTFP7k7cmLBdmdbsQzd6VQcMWo5VyU82BZ",
   ausd: "D99Hw2auf97WjzKPXZnpxTvJBt2TD6pPnk3a7uHceHqj",
   cfusd: "3jcCKowE3KdNro2QVETcVghGdTSQrCA7i9rbfZHhepEi",
+  moveusd: "6rYsH85HXG7w7ZCtYRwfj4T2fsUdGtmWWo52hRGRuVNr",
+  fdusd: "DvggYdonWQdygGvgtM5SrVLMhkYxgdTDr199yc673bF",
+  usdg: "5M7McNWX7yBBGrZGB6XhmHYhFwWwwB2ckrA1HEpkf3SA"
 };
 
 export const STAGING_POOLS = {
