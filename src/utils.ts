@@ -51,7 +51,7 @@ export const init = ({
 
   state.wallet =
     payer === undefined ? envProvider?.wallet : new NodeWallet(payer);
-  state.provider = new AnchorProvider(connection, state.wallet);
+  state.provider = new AnchorProvider(connection as any, state.wallet);
   state.program = new Program(IDL as Numeraire, state.provider);
   state.applyD = applyD;
 

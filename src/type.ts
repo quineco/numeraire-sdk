@@ -1,7 +1,7 @@
 import { Connection, PublicKey } from "@solana/web3.js";
 import { Numeraire } from "./idl/numeraire";
 import { MethodsBuilder } from "@coral-xyz/anchor/dist/cjs/program/namespace/methods";
-import { Wallet } from "@coral-xyz/anchor";
+import { BN, Wallet } from "@coral-xyz/anchor";
 export interface PairInfo {
   amount: number;
   mint: PublicKey;
@@ -72,7 +72,6 @@ export interface SwapInInfo {
   pool: PublicKey;
   in: number | string;
   out: number | string;
-  // @ts-expect-error
   exactAmountIn: number | BN;
   minAmountOut: number;
   hints?: number[];

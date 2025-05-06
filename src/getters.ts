@@ -10,7 +10,7 @@ import { Numeraire } from "./idl/numeraire";
 import IDL from "./idl/numeraire.json";
 import { Pair, PoolInfo } from "./type";
 import { ID, MAX_STABLES_PER_POOL, NUMERAIRE_CONFIG_ID } from "./constant";
-import { state } from "./utils";
+import { state, u64ToF64_LittleEndian } from "./utils";
 
 export const getNumeraireConfig = async (fetchWhitelistedAddr = false) => {
   const conf = await state.program.account.numeraireConfig.fetch(
@@ -59,10 +59,8 @@ export const getPairState = async (pair: PublicKey) => {
 
   if ("padding" in p) delete p.padding;
 
-  // @ts-expect-error it's bigint only for a tiny bit
-  p.curveAlpha = u64ToF64_LittleEndian(p.curveAlpha);
-  // @ts-expect-error ^^
-  p.curveBeta = u64ToF64_LittleEndian(p.curveBeta);
+  p.curveAlpha = u64ToF64_LittleEndian(BigInt(p.curveAlpha));
+  p.curveBeta = u64ToF64_LittleEndian(BigInt(p.curveBeta));
 
   p.xVaultBalance = Number(
     (await state.provider.connection.getTokenAccountBalance(p.xVault)).value
@@ -180,10 +178,8 @@ export const getPoolState = async (poolKey: PublicKey) => {
 
   for (const pair of pool.pairs) {
     if ("padding" in pair) delete pair["padding"];
-    // @ts-expect-error temp bigint
-    pair.curveAlpha = u64ToF64_LittleEndian(pair.curveAlpha);
-    // @ts-expect-error temp bigint
-    pair.curveBeta = u64ToF64_LittleEndian(pair.curveBeta);
+    pair.curveAlpha = u64ToF64_LittleEndian(BigInt(pair.curveAlpha));
+    pair.curveBeta = u64ToF64_LittleEndian(BigInt(pair.curveBeta));
   }
 
   try {
