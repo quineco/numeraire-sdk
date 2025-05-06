@@ -226,7 +226,9 @@ export const swapExactIn = async (info: SwapInInfo, quote: boolean = false) => {
   const exactAmountIn =
     exactAmountInInput == USE_ENTIRE_IN_ACCOUNT_AMOUNT
       ? USE_ENTIRE_IN_ACCOUNT_AMOUNT
-      : new BN(exactAmountInInput * inD);
+      : typeof exactAmountInInput === "number"
+      ? new BN(exactAmountInInput * inD)
+      : exactAmountInInput.mul(new BN(inD));
 
   const minAmountOut = new BN(minAmountOutInput * outD);
 
@@ -354,7 +356,9 @@ export const swapExactInOptimalCUTransaction = async (
   const exactAmountIn =
     exactAmountInInput == USE_ENTIRE_IN_ACCOUNT_AMOUNT
       ? USE_ENTIRE_IN_ACCOUNT_AMOUNT
-      : new BN(exactAmountInInput * inD);
+      : typeof exactAmountInInput === "number"
+      ? new BN(exactAmountInInput * inD)
+      : exactAmountInInput.mul(new BN(inD));
 
   const minAmountOut = new BN(minAmountOutInput * outD);
 
