@@ -401,9 +401,9 @@ export const setWeights = async (data: {
   pool: PublicKey;
   weights: number[];
 }) => {
-  if (data.weights.length > MAX_STABLES_PER_POOL)
+  if (data.weights.length !== MAX_STABLES_PER_POOL)
     throw new Error(
-      `Weights length should be less than ${MAX_STABLES_PER_POOL}`
+      `Weights length should be equal to ${MAX_STABLES_PER_POOL}`
     );
 
   const call = await state.program.methods
