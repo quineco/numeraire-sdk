@@ -9,6 +9,9 @@
   "instructions": [
     {
       "name": "add_liquidity",
+      "docs": [
+        "Pool Owner/Whitelist only functions"
+      ],
       "discriminator": [
         181,
         157,
@@ -955,47 +958,6 @@
       "returns": "u64"
     },
     {
-      "name": "set_bonding_curve_parameters_for_pair",
-      "discriminator": [
-        243,
-        141,
-        229,
-        43,
-        185,
-        141,
-        8,
-        133
-      ],
-      "accounts": [
-        {
-          "name": "pool",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "pool"
-              }
-            ]
-          }
-        },
-        {
-          "name": "payer",
-          "signer": true
-        }
-      ],
-      "args": [
-        {
-          "name": "data",
-          "type": {
-            "defined": {
-              "name": "SetBondingCurveData"
-            }
-          }
-        }
-      ]
-    },
-    {
       "name": "set_fee",
       "discriminator": [
         18,
@@ -1479,6 +1441,9 @@
     },
     {
       "name": "set_status",
+      "docs": [
+        "Pool Owner only functions"
+      ],
       "discriminator": [
         181,
         184,
@@ -1513,47 +1478,6 @@
           "type": {
             "defined": {
               "name": "SetStatusData"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "set_weights",
-      "discriminator": [
-        25,
-        58,
-        193,
-        19,
-        186,
-        84,
-        236,
-        187
-      ],
-      "accounts": [
-        {
-          "name": "pool",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "pool"
-              }
-            ]
-          }
-        },
-        {
-          "name": "payer",
-          "signer": true
-        }
-      ],
-      "args": [
-        {
-          "name": "data",
-          "type": {
-            "defined": {
-              "name": "SetWeightsData"
             }
           }
         }
@@ -2523,16 +2447,6 @@
       "code": 6033,
       "name": "InvalidAction",
       "msg": "This action is not allowed"
-    },
-    {
-      "code": 6034,
-      "name": "MissingAccount",
-      "msg": "Missing account"
-    },
-    {
-      "code": 6035,
-      "name": "InvalidPairIndex",
-      "msg": "Invalid pair index"
     }
   ],
   "types": [
@@ -2882,55 +2796,6 @@
       }
     },
     {
-      "name": "SetBondingCurveData",
-      "repr": {
-        "kind": "c"
-      },
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "pair_index",
-            "type": "u8"
-          },
-          {
-            "name": "true_alpha",
-            "type": "u64"
-          },
-          {
-            "name": "curve_amp",
-            "type": {
-              "option": "u128"
-            }
-          },
-          {
-            "name": "curve_a",
-            "type": {
-              "option": "u128"
-            }
-          },
-          {
-            "name": "curve_b",
-            "type": {
-              "option": "u128"
-            }
-          },
-          {
-            "name": "curve_alpha",
-            "type": {
-              "option": "u64"
-            }
-          },
-          {
-            "name": "curve_beta",
-            "type": {
-              "option": "u64"
-            }
-          }
-        ]
-      }
-    },
-    {
       "name": "SetFeeData",
       "repr": {
         "kind": "c"
@@ -3036,26 +2901,6 @@
           {
             "name": "status",
             "type": "u32"
-          }
-        ]
-      }
-    },
-    {
-      "name": "SetWeightsData",
-      "repr": {
-        "kind": "c"
-      },
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "weights",
-            "type": {
-              "array": [
-                "u32",
-                10
-              ]
-            }
           }
         ]
       }
