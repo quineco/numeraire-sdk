@@ -346,7 +346,7 @@ export const compound = async ({
   requireCuIx?: boolean;
   cuLimit?: number;
 }) => {
-  const { accounts, remainingAccounts } = await getLiqAccounts(pool);
+  const { accounts, remainingAccounts } = await getLiqAccounts(pool, undefined, [], { isCompound: true });
 
   const preInstructions = requireCuIx
     ? [
