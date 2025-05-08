@@ -12,7 +12,7 @@ import {
 } from "@solana/spl-token";
 import { BN } from "bn.js";
 import { AddInfo, RemoveInfo, SwapInInfo } from "../type";
-import { getLiqAccounts, getPoolKeys } from "../getters";
+import {getLiqAccounts, getNumeraireConfig, getPoolKeys} from "../getters";
 import {
   DEFAULT_PUBLIC_KEY,
   ID,
@@ -218,6 +218,17 @@ export const swapExactIn = async (info: SwapInInfo, quote: boolean = false) => {
   const outPair =
     outIndex !== MAX_STABLES_PER_POOL ? info.pairs[outIndex] : lpPair();
 
+  const numeraireConfig = await getNumeraireConfig({ fetchWhitelistedAddr: false, fetchFeeReceiverAuthority: true });
+  const feeReceiverAuthority = numeraireConfig["feeReceiverAuthority"];
+
+  const feeReceiverAccount = getAssociatedTokenAddressSync(
+      inPair.xMint,
+      feeReceiverAuthority,
+      true,
+      inPair.xIs2022 === 0 ? TOKEN_PROGRAM_ID : TOKEN_2022_PROGRAM_ID
+  );
+
+
   const inD = state.applyD ? 10 ** inPair.decimals : 1;
   const outD = state.applyD ? 10 ** outPair.decimals : 1;
   const normD = state.applyD ? 10 ** NORMALIZED_VALUE_DECIMALS : 1;
@@ -276,6 +287,7 @@ export const swapExactIn = async (info: SwapInInfo, quote: boolean = false) => {
           true,
           outPair.xIs2022 === 0 ? TOKEN_PROGRAM_ID : TOKEN_2022_PROGRAM_ID
         ),
+      feeReceiver: feeReceiverAccount,
       payer: state.wallet ? state.wallet.publicKey : DEFAULT_PUBLIC_KEY,
     } as any)
     .preInstructions(preInstructions);
@@ -348,6 +360,16 @@ export const swapExactInOptimalCUTransaction = async (
   const outPair =
     outIndex !== MAX_STABLES_PER_POOL ? info.pairs[outIndex] : lpPair();
 
+  const numeraireConfig = await getNumeraireConfig({ fetchWhitelistedAddr: false, fetchFeeReceiverAuthority: true });
+  const feeReceiverAuthority = numeraireConfig["feeReceiverAuthority"];
+
+  const feeReceiverAccount = getAssociatedTokenAddressSync(
+      inPair.xMint,
+      feeReceiverAuthority,
+      true,
+      inPair.xIs2022 === 0 ? TOKEN_PROGRAM_ID : TOKEN_2022_PROGRAM_ID
+  );
+
   const inD = state.applyD ? 10 ** inPair.decimals : 1;
   const outD = state.applyD ? 10 ** outPair.decimals : 1;
   const normD = state.applyD ? 10 ** NORMALIZED_VALUE_DECIMALS : 1;
@@ -405,6 +427,7 @@ export const swapExactInOptimalCUTransaction = async (
         true,
         outPair.xIs2022 === 0 ? TOKEN_PROGRAM_ID : TOKEN_2022_PROGRAM_ID
       ),
+    feeReceiver: feeReceiverAccount,
     payer: state.wallet ? state.wallet.publicKey : DEFAULT_PUBLIC_KEY,
   } as any);
 
