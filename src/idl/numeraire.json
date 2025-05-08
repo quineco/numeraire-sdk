@@ -955,6 +955,47 @@
       "returns": "u64"
     },
     {
+      "name": "set_bonding_curve_parameters_for_pair",
+      "discriminator": [
+        243,
+        141,
+        229,
+        43,
+        185,
+        141,
+        8,
+        133
+      ],
+      "accounts": [
+        {
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "data",
+          "type": {
+            "defined": {
+              "name": "SetBondingCurveData"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "set_fee",
       "discriminator": [
         18,
@@ -2487,6 +2528,11 @@
       "code": 6034,
       "name": "MissingAccount",
       "msg": "Missing account"
+    },
+    {
+      "code": 6035,
+      "name": "InvalidPairIndex",
+      "msg": "Invalid pair index"
     }
   ],
   "types": [
@@ -2831,6 +2877,55 @@
           {
             "name": "out_index",
             "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SetBondingCurveData",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pair_index",
+            "type": "u8"
+          },
+          {
+            "name": "true_alpha",
+            "type": "u64"
+          },
+          {
+            "name": "curve_amp",
+            "type": {
+              "option": "u128"
+            }
+          },
+          {
+            "name": "curve_a",
+            "type": {
+              "option": "u128"
+            }
+          },
+          {
+            "name": "curve_b",
+            "type": {
+              "option": "u128"
+            }
+          },
+          {
+            "name": "curve_alpha",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "curve_beta",
+            "type": {
+              "option": "u64"
+            }
           }
         ]
       }
