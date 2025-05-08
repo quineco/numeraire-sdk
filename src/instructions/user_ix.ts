@@ -40,9 +40,10 @@ export const addLiquidity = async (info: AddInfo) => {
   }
 
   const { accounts, pool, remainingAccounts } = await getLiqAccounts(
-    poolKey,
-    undefined,
-    excludedTokens
+      poolKey,
+      undefined,
+      excludedTokens,
+      { isCompound: false } // explicitly specify this is not compound
   );
 
   const maxAmountsInBN = [];
@@ -112,9 +113,10 @@ export const removeLiquidity = async (info: RemoveInfo) => {
     .filter((i) => i !== undefined);
 
   const { accounts, pool, remainingAccounts } = await getLiqAccounts(
-    poolKey,
-    poolKeys,
-    outIndex === MAX_STABLES_PER_POOL ? [] : excludedTokens
+      poolKey,
+      poolKeys,
+      outIndex === MAX_STABLES_PER_POOL ? [] : excludedTokens,
+      { isCompound: false } // explicitly specify this is not compound
   );
 
   const minAmountsOut = Array(MAX_STABLES_PER_POOL).fill(new BN(0));
