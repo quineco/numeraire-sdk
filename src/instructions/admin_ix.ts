@@ -423,7 +423,6 @@ export const setProtocolFeeProportion = async (proportion: number) => {
 
   return { call };
 };
-
 export const setFeeReceiverAuthority = async (authority: PublicKey) => {
   const call = await state.program.methods
       .setFeeReceiverAuthority({ authority })
