@@ -9,8 +9,16 @@
   "instructions": [
     {
       "name": "add_liquidity",
-      "docs": ["Pool Owner/Whitelist only functions"],
-      "discriminator": [181, 157, 89, 67, 143, 182, 52, 72],
+      "discriminator": [
+        181,
+        157,
+        89,
+        67,
+        143,
+        182,
+        52,
+        72
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -35,7 +43,17 @@
               },
               {
                 "kind": "const",
-                "value": [108, 105, 113, 117, 105, 100, 105, 116, 121]
+                "value": [
+                  108,
+                  105,
+                  113,
+                  117,
+                  105,
+                  100,
+                  105,
+                  116,
+                  121
+                ]
               }
             ]
           }
@@ -61,9 +79,38 @@
             "program": {
               "kind": "const",
               "value": [
-                140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142,
-                13, 131, 11, 90, 19, 153, 218, 255, 16, 132, 4, 142, 123, 216,
-                219, 233, 248, 89
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
               ]
             }
           }
@@ -74,7 +121,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -85,7 +139,9 @@
         },
         {
           "name": "token_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -107,7 +163,16 @@
     },
     {
       "name": "compound",
-      "discriminator": [165, 208, 251, 78, 242, 160, 141, 47],
+      "discriminator": [
+        165,
+        208,
+        251,
+        78,
+        242,
+        160,
+        141,
+        47
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -132,7 +197,17 @@
               },
               {
                 "kind": "const",
-                "value": [108, 105, 113, 117, 105, 100, 105, 116, 121]
+                "value": [
+                  108,
+                  105,
+                  113,
+                  117,
+                  105,
+                  100,
+                  105,
+                  116,
+                  121
+                ]
               }
             ]
           }
@@ -158,9 +233,38 @@
             "program": {
               "kind": "const",
               "value": [
-                140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142,
-                13, 131, 11, 90, 19, 153, 218, 255, 16, 132, 4, 142, 123, 216,
-                219, 233, 248, 89
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
               ]
             }
           }
@@ -171,7 +275,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -182,7 +293,9 @@
         },
         {
           "name": "token_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -194,7 +307,16 @@
     },
     {
       "name": "create_pool",
-      "discriminator": [233, 146, 209, 142, 207, 104, 64, 188],
+      "discriminator": [
+        233,
+        146,
+        209,
+        142,
+        207,
+        104,
+        64,
+        188
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -219,7 +341,17 @@
               },
               {
                 "kind": "const",
-                "value": [108, 105, 113, 117, 105, 100, 105, 116, 121]
+                "value": [
+                  108,
+                  105,
+                  113,
+                  117,
+                  105,
+                  100,
+                  105,
+                  116,
+                  121
+                ]
               }
             ]
           }
@@ -245,9 +377,38 @@
             "program": {
               "kind": "const",
               "value": [
-                140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142,
-                13, 131, 11, 90, 19, 153, 218, 255, 16, 132, 4, 142, 123, 216,
-                219, 233, 248, 89
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
               ]
             }
           }
@@ -258,7 +419,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -270,7 +438,9 @@
         },
         {
           "name": "token_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -299,7 +469,16 @@
     },
     {
       "name": "init_virtual_stable_pair",
-      "discriminator": [228, 18, 163, 161, 101, 204, 106, 172],
+      "discriminator": [
+        228,
+        18,
+        163,
+        161,
+        101,
+        204,
+        106,
+        172
+      ],
       "accounts": [
         {
           "name": "x_mint"
@@ -330,7 +509,17 @@
               },
               {
                 "kind": "const",
-                "value": [97, 117, 116, 104, 111, 114, 105, 116, 121]
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
               }
             ]
           }
@@ -346,7 +535,17 @@
               },
               {
                 "kind": "const",
-                "value": [108, 105, 113, 117, 105, 100, 105, 116, 121]
+                "value": [
+                  108,
+                  105,
+                  113,
+                  117,
+                  105,
+                  100,
+                  105,
+                  116,
+                  121
+                ]
               }
             ]
           }
@@ -372,9 +571,38 @@
             "program": {
               "kind": "const",
               "value": [
-                140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142,
-                13, 131, 11, 90, 19, 153, 218, 255, 16, 132, 4, 142, 123, 216,
-                219, 233, 248, 89
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
               ]
             }
           }
@@ -385,7 +613,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -397,7 +632,9 @@
         },
         {
           "name": "token_program",
-          "docs": ["Solana ecosystem accounts"]
+          "docs": [
+            "Solana ecosystem accounts"
+          ]
         },
         {
           "name": "associated_token_program",
@@ -421,7 +658,16 @@
     },
     {
       "name": "remove_all_liquidity",
-      "discriminator": [10, 51, 61, 35, 112, 105, 24, 85],
+      "discriminator": [
+        10,
+        51,
+        61,
+        35,
+        112,
+        105,
+        24,
+        85
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -446,7 +692,17 @@
               },
               {
                 "kind": "const",
-                "value": [108, 105, 113, 117, 105, 100, 105, 116, 121]
+                "value": [
+                  108,
+                  105,
+                  113,
+                  117,
+                  105,
+                  100,
+                  105,
+                  116,
+                  121
+                ]
               }
             ]
           }
@@ -472,9 +728,38 @@
             "program": {
               "kind": "const",
               "value": [
-                140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142,
-                13, 131, 11, 90, 19, 153, 218, 255, 16, 132, 4, 142, 123, 216,
-                219, 233, 248, 89
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
               ]
             }
           }
@@ -485,7 +770,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -496,7 +788,9 @@
         },
         {
           "name": "token_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -508,7 +802,16 @@
     },
     {
       "name": "remove_liquidity",
-      "discriminator": [80, 85, 209, 72, 24, 206, 177, 108],
+      "discriminator": [
+        80,
+        85,
+        209,
+        72,
+        24,
+        206,
+        177,
+        108
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -533,7 +836,17 @@
               },
               {
                 "kind": "const",
-                "value": [108, 105, 113, 117, 105, 100, 105, 116, 121]
+                "value": [
+                  108,
+                  105,
+                  113,
+                  117,
+                  105,
+                  100,
+                  105,
+                  116,
+                  121
+                ]
               }
             ]
           }
@@ -559,9 +872,38 @@
             "program": {
               "kind": "const",
               "value": [
-                140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142,
-                13, 131, 11, 90, 19, 153, 218, 255, 16, 132, 4, 142, 123, 216,
-                219, 233, 248, 89
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
               ]
             }
           }
@@ -572,7 +914,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -583,7 +932,9 @@
         },
         {
           "name": "token_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -605,7 +956,16 @@
     },
     {
       "name": "set_fee",
-      "discriminator": [18, 154, 24, 18, 237, 214, 19, 80],
+      "discriminator": [
+        18,
+        154,
+        24,
+        18,
+        237,
+        214,
+        19,
+        80
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -637,7 +997,16 @@
     },
     {
       "name": "set_inv_t_max",
-      "discriminator": [218, 209, 244, 237, 211, 236, 98, 58],
+      "discriminator": [
+        218,
+        209,
+        244,
+        237,
+        211,
+        236,
+        98,
+        58
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -669,7 +1038,16 @@
     },
     {
       "name": "set_lp_token_metadata",
-      "discriminator": [71, 73, 56, 155, 202, 142, 100, 150],
+      "discriminator": [
+        71,
+        73,
+        56,
+        155,
+        202,
+        142,
+        100,
+        150
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -694,7 +1072,17 @@
               },
               {
                 "kind": "const",
-                "value": [108, 105, 113, 117, 105, 100, 105, 116, 121]
+                "value": [
+                  108,
+                  105,
+                  113,
+                  117,
+                  105,
+                  100,
+                  105,
+                  116,
+                  121
+                ]
               }
             ]
           }
@@ -706,7 +1094,16 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [109, 101, 116, 97, 100, 97, 116, 97]
+                "value": [
+                  109,
+                  101,
+                  116,
+                  97,
+                  100,
+                  97,
+                  116,
+                  97
+                ]
               },
               {
                 "kind": "account",
@@ -729,7 +1126,9 @@
         },
         {
           "name": "token_metadata_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "metaqbxxUerdq28cj1RbAWkYQm3ybzjb6a8bt518x1s"
         },
         {
@@ -758,7 +1157,16 @@
     },
     {
       "name": "set_numeraire_owner",
-      "discriminator": [6, 199, 177, 104, 86, 61, 93, 253],
+      "discriminator": [
+        6,
+        199,
+        177,
+        104,
+        86,
+        61,
+        93,
+        253
+      ],
       "accounts": [
         {
           "name": "numeraire_config",
@@ -767,7 +1175,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -783,7 +1198,9 @@
         },
         {
           "name": "system_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -800,7 +1217,16 @@
     },
     {
       "name": "set_numeraire_status",
-      "discriminator": [10, 17, 5, 71, 204, 171, 126, 173],
+      "discriminator": [
+        10,
+        17,
+        5,
+        71,
+        204,
+        171,
+        126,
+        173
+      ],
       "accounts": [
         {
           "name": "numeraire_config",
@@ -809,7 +1235,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -825,7 +1258,9 @@
         },
         {
           "name": "system_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -842,7 +1277,16 @@
     },
     {
       "name": "set_numeraire_whitelisted_pool_creator",
-      "discriminator": [147, 51, 31, 255, 111, 2, 189, 173],
+      "discriminator": [
+        147,
+        51,
+        31,
+        255,
+        111,
+        2,
+        189,
+        173
+      ],
       "accounts": [
         {
           "name": "numeraire_config",
@@ -851,7 +1295,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -867,7 +1318,9 @@
         },
         {
           "name": "system_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -884,7 +1337,16 @@
     },
     {
       "name": "set_owner",
-      "discriminator": [72, 202, 120, 52, 77, 128, 96, 197],
+      "discriminator": [
+        72,
+        202,
+        120,
+        52,
+        77,
+        128,
+        96,
+        197
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -916,7 +1378,16 @@
     },
     {
       "name": "set_rate",
-      "discriminator": [99, 58, 170, 238, 160, 120, 74, 11],
+      "discriminator": [
+        99,
+        58,
+        170,
+        238,
+        160,
+        120,
+        74,
+        11
+      ],
       "accounts": [
         {
           "name": "numeraire_config",
@@ -925,7 +1396,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -941,7 +1419,9 @@
         },
         {
           "name": "system_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "11111111111111111111111111111111"
         }
       ],
@@ -958,8 +1438,16 @@
     },
     {
       "name": "set_status",
-      "docs": ["Pool Owner only functions"],
-      "discriminator": [181, 184, 224, 203, 193, 29, 177, 224],
+      "discriminator": [
+        181,
+        184,
+        224,
+        203,
+        193,
+        29,
+        177,
+        224
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -990,8 +1478,58 @@
       ]
     },
     {
+      "name": "set_weights",
+      "discriminator": [
+        25,
+        58,
+        193,
+        19,
+        186,
+        84,
+        236,
+        187
+      ],
+      "accounts": [
+        {
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "data",
+          "type": {
+            "defined": {
+              "name": "SetWeightsData"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "set_whitelisted_adder",
-      "discriminator": [74, 38, 140, 129, 228, 73, 236, 105],
+      "discriminator": [
+        74,
+        38,
+        140,
+        129,
+        228,
+        73,
+        236,
+        105
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -1023,7 +1561,16 @@
     },
     {
       "name": "skim",
-      "discriminator": [238, 120, 221, 138, 82, 60, 100, 218],
+      "discriminator": [
+        238,
+        120,
+        221,
+        138,
+        82,
+        60,
+        100,
+        218
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -1048,7 +1595,17 @@
               },
               {
                 "kind": "const",
-                "value": [108, 105, 113, 117, 105, 100, 105, 116, 121]
+                "value": [
+                  108,
+                  105,
+                  113,
+                  117,
+                  105,
+                  100,
+                  105,
+                  116,
+                  121
+                ]
               }
             ]
           }
@@ -1074,9 +1631,38 @@
             "program": {
               "kind": "const",
               "value": [
-                140, 151, 37, 143, 78, 36, 137, 241, 187, 61, 16, 41, 20, 142,
-                13, 131, 11, 90, 19, 153, 218, 255, 16, 132, 4, 142, 123, 216,
-                219, 233, 248, 89
+                140,
+                151,
+                37,
+                143,
+                78,
+                36,
+                137,
+                241,
+                187,
+                61,
+                16,
+                41,
+                20,
+                142,
+                13,
+                131,
+                11,
+                90,
+                19,
+                153,
+                218,
+                255,
+                16,
+                132,
+                4,
+                142,
+                123,
+                216,
+                219,
+                233,
+                248,
+                89
               ]
             }
           }
@@ -1087,7 +1673,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -1098,7 +1691,9 @@
         },
         {
           "name": "token_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -1110,7 +1705,16 @@
     },
     {
       "name": "swap_exact_in",
-      "discriminator": [104, 104, 131, 86, 161, 189, 180, 216],
+      "discriminator": [
+        104,
+        104,
+        131,
+        86,
+        161,
+        189,
+        180,
+        216
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -1156,7 +1760,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -1170,7 +1781,9 @@
         },
         {
           "name": "token_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -1192,7 +1805,16 @@
     },
     {
       "name": "swap_exact_in_hinted",
-      "discriminator": [98, 239, 244, 233, 16, 236, 40, 49],
+      "discriminator": [
+        98,
+        239,
+        244,
+        233,
+        16,
+        236,
+        40,
+        49
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -1238,7 +1860,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -1252,7 +1881,9 @@
         },
         {
           "name": "token_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -1274,7 +1905,16 @@
     },
     {
       "name": "swap_exact_in_quote",
-      "discriminator": [68, 209, 177, 170, 185, 100, 29, 191],
+      "discriminator": [
+        68,
+        209,
+        177,
+        170,
+        185,
+        100,
+        29,
+        191
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -1320,7 +1960,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -1334,7 +1981,9 @@
         },
         {
           "name": "token_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -1356,7 +2005,16 @@
     },
     {
       "name": "swap_exact_out",
-      "discriminator": [250, 73, 101, 33, 38, 207, 75, 184],
+      "discriminator": [
+        250,
+        73,
+        101,
+        33,
+        38,
+        207,
+        75,
+        184
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -1402,7 +2060,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -1416,7 +2081,9 @@
         },
         {
           "name": "token_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -1438,7 +2105,16 @@
     },
     {
       "name": "swap_exact_out_hinted",
-      "discriminator": [153, 208, 206, 70, 62, 234, 98, 182],
+      "discriminator": [
+        153,
+        208,
+        206,
+        70,
+        62,
+        234,
+        98,
+        182
+      ],
       "accounts": [
         {
           "name": "pool",
@@ -1484,7 +2160,14 @@
             "seeds": [
               {
                 "kind": "const",
-                "value": [99, 111, 110, 102, 105, 103]
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
               }
             ]
           }
@@ -1498,7 +2181,9 @@
         },
         {
           "name": "token_program",
-          "docs": ["Solana ecosystem accounts"],
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
           "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
         },
         {
@@ -1522,37 +2207,109 @@
   "accounts": [
     {
       "name": "NumeraireConfig",
-      "discriminator": [230, 62, 124, 43, 102, 101, 88, 63]
+      "discriminator": [
+        230,
+        62,
+        124,
+        43,
+        102,
+        101,
+        88,
+        63
+      ]
     },
     {
       "name": "StablePool",
-      "discriminator": [239, 91, 93, 162, 171, 14, 42, 66]
+      "discriminator": [
+        239,
+        91,
+        93,
+        162,
+        171,
+        14,
+        42,
+        66
+      ]
     },
     {
       "name": "VirtualStablePair",
-      "discriminator": [112, 153, 135, 223, 53, 247, 129, 101]
+      "discriminator": [
+        112,
+        153,
+        135,
+        223,
+        53,
+        247,
+        129,
+        101
+      ]
     }
   ],
   "events": [
     {
       "name": "AddLiquidity",
-      "discriminator": [31, 94, 125, 90, 227, 52, 61, 186]
+      "discriminator": [
+        31,
+        94,
+        125,
+        90,
+        227,
+        52,
+        61,
+        186
+      ]
     },
     {
       "name": "Quote",
-      "discriminator": [133, 244, 92, 134, 193, 24, 187, 158]
+      "discriminator": [
+        133,
+        244,
+        92,
+        134,
+        193,
+        24,
+        187,
+        158
+      ]
     },
     {
       "name": "RemoveLiquidity",
-      "discriminator": [116, 244, 97, 232, 103, 31, 152, 58]
+      "discriminator": [
+        116,
+        244,
+        97,
+        232,
+        103,
+        31,
+        152,
+        58
+      ]
     },
     {
       "name": "SwapExactIn",
-      "discriminator": [147, 136, 213, 11, 150, 23, 141, 152]
+      "discriminator": [
+        147,
+        136,
+        213,
+        11,
+        150,
+        23,
+        141,
+        152
+      ]
     },
     {
       "name": "SwapExactOut",
-      "discriminator": [71, 66, 127, 123, 231, 29, 227, 92]
+      "discriminator": [
+        71,
+        66,
+        127,
+        123,
+        231,
+        29,
+        227,
+        92
+      ]
     }
   ],
   "errors": [
@@ -1725,6 +2482,11 @@
       "code": 6033,
       "name": "InvalidAction",
       "msg": "This action is not allowed"
+    },
+    {
+      "code": 6034,
+      "name": "MissingAccount",
+      "msg": "Missing account"
     }
   ],
   "types": [
@@ -1740,19 +2502,28 @@
           {
             "name": "x_reserve_deltas",
             "type": {
-              "array": ["u64", 10]
+              "array": [
+                "u64",
+                10
+              ]
             }
           },
           {
             "name": "y_reserve_deltas",
             "type": {
-              "array": ["u64", 10]
+              "array": [
+                "u64",
+                10
+              ]
             }
           },
           {
             "name": "inv_L_deltas",
             "type": {
-              "array": ["u64", 10]
+              "array": [
+                "u64",
+                10
+              ]
             }
           },
           {
@@ -1781,7 +2552,10 @@
           {
             "name": "max_amounts_in",
             "type": {
-              "array": ["u64", 10]
+              "array": [
+                "u64",
+                10
+              ]
             }
           },
           {
@@ -1795,13 +2569,19 @@
           {
             "name": "swap_paths",
             "type": {
-              "array": ["u8", 10]
+              "array": [
+                "u8",
+                10
+              ]
             }
           },
           {
             "name": "swap_amounts",
             "type": {
-              "array": ["u64", 10]
+              "array": [
+                "u64",
+                10
+              ]
             }
           }
         ]
@@ -1834,7 +2614,10 @@
           {
             "name": "weights",
             "type": {
-              "array": ["u32", 10]
+              "array": [
+                "u32",
+                10
+              ]
             }
           },
           {
@@ -1911,31 +2694,46 @@
           {
             "name": "rate_mints",
             "type": {
-              "array": ["pubkey", 10]
+              "array": [
+                "pubkey",
+                10
+              ]
             }
           },
           {
             "name": "rate_nums",
             "type": {
-              "array": ["u32", 10]
+              "array": [
+                "u32",
+                10
+              ]
             }
           },
           {
             "name": "rate_denoms",
             "type": {
-              "array": ["u32", 10]
+              "array": [
+                "u32",
+                10
+              ]
             }
           },
           {
             "name": "_padding",
             "type": {
-              "array": ["u8", 12]
+              "array": [
+                "u8",
+                12
+              ]
             }
           },
           {
             "name": "padding",
             "type": {
-              "array": ["u8", 1024]
+              "array": [
+                "u8",
+                1024
+              ]
             }
           }
         ]
@@ -1965,25 +2763,37 @@
           {
             "name": "x_reserve_deltas",
             "type": {
-              "array": ["u64", 10]
+              "array": [
+                "u64",
+                10
+              ]
             }
           },
           {
             "name": "y_reserve_deltas",
             "type": {
-              "array": ["u64", 10]
+              "array": [
+                "u64",
+                10
+              ]
             }
           },
           {
             "name": "inv_L_deltas",
             "type": {
-              "array": ["u64", 10]
+              "array": [
+                "u64",
+                10
+              ]
             }
           },
           {
             "name": "min_amounts_out",
             "type": {
-              "array": ["u64", 10]
+              "array": [
+                "u64",
+                10
+              ]
             }
           },
           {
@@ -2012,7 +2822,10 @@
           {
             "name": "min_amounts_out",
             "type": {
-              "array": ["u64", 10]
+              "array": [
+                "u64",
+                10
+              ]
             }
           },
           {
@@ -2133,6 +2946,26 @@
       }
     },
     {
+      "name": "SetWeightsData",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "weights",
+            "type": {
+              "array": [
+                "u32",
+                10
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "SetWhilelistedAddrData",
       "repr": {
         "kind": "c"
@@ -2196,7 +3029,10 @@
           {
             "name": "weights",
             "type": {
-              "array": ["u32", 10]
+              "array": [
+                "u32",
+                10
+              ]
             }
           },
           {
@@ -2226,13 +3062,19 @@
           {
             "name": "_padding",
             "type": {
-              "array": ["u8", 2]
+              "array": [
+                "u8",
+                2
+              ]
             }
           },
           {
             "name": "padding",
             "type": {
-              "array": ["u8", 128]
+              "array": [
+                "u8",
+                128
+              ]
             }
           }
         ]
@@ -2301,13 +3143,19 @@
           {
             "name": "hints",
             "type": {
-              "array": ["u64", 10]
+              "array": [
+                "u64",
+                10
+              ]
             }
           },
           {
             "name": "path_hints",
             "type": {
-              "array": ["u8", 10]
+              "array": [
+                "u8",
+                10
+              ]
             }
           }
         ]
@@ -2403,13 +3251,19 @@
           {
             "name": "hints",
             "type": {
-              "array": ["u64", 10]
+              "array": [
+                "u64",
+                10
+              ]
             }
           },
           {
             "name": "path_hints",
             "type": {
-              "array": ["u8", 10]
+              "array": [
+                "u8",
+                10
+              ]
             }
           }
         ]
@@ -2527,13 +3381,19 @@
           {
             "name": "_padding",
             "type": {
-              "array": ["u8", 5]
+              "array": [
+                "u8",
+                5
+              ]
             }
           },
           {
             "name": "padding",
             "type": {
-              "array": ["u8", 128]
+              "array": [
+                "u8",
+                128
+              ]
             }
           }
         ]

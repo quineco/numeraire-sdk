@@ -36,7 +36,7 @@ export const createPair = async (
     beta,
     adder_token_account = undefined,
   }: PairInfo,
-  send = true,
+  send = true
 ): Promise<Pair> => {
   if (typeof decimals !== "number") throw new Error("Decimals required");
   const d = state.applyD ? 10 ** decimals : 1;
@@ -45,27 +45,31 @@ export const createPair = async (
 
   let trueAlpha: number = await new Promise((res, err) => {
     // Calculate normalized values using the same logic as before
-    const normalizedA = state.applyD ? A : A / Math.pow(10, NORMALIZED_VALUE_DECIMALS);
-    const normalizedAb = state.applyD ? a : a / Math.pow(10, NORMALIZED_VALUE_DECIMALS);
+    const normalizedA = state.applyD
+      ? A
+      : A / Math.pow(10, NORMALIZED_VALUE_DECIMALS);
+    const normalizedAb = state.applyD
+      ? a
+      : a / Math.pow(10, NORMALIZED_VALUE_DECIMALS);
 
     // Construct the URL with query parameters
     const url = `https://sympy-eight.vercel.app/eval_ab?A=${normalizedA}&a=${normalizedAb}&apply_d=true`;
 
     // Use fetch API instead of Python exec
     fetch(url)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(`Request failed with status ${response.status}`);
-          }
-          return response.json();
-        })
-        .then((data) => {
-          return res(parseFloat(data["result"]));
-        })
-        .catch((error) => {
-          console.error(`Request error: ${error.message}`);
-          return err(error);
-        });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        return res(parseFloat(data["result"]));
+      })
+      .catch((error) => {
+        console.error(`Request error: ${error.message}`);
+        return err(error);
+      });
   });
 
   if (Math.abs(trueAlpha - alpha) > 0.00001)
@@ -91,7 +95,7 @@ export const createPair = async (
           mint,
           state.wallet.publicKey,
           false,
-          spl_2022 ? TOKEN_2022_PROGRAM_ID : TOKEN_PROGRAM_ID,
+          spl_2022 ? TOKEN_2022_PROGRAM_ID : TOKEN_PROGRAM_ID
         ),
       payer: state.wallet.publicKey,
       tokenProgram: spl_2022 ? TOKEN_2022_PROGRAM_ID : TOKEN_PROGRAM_ID,
@@ -118,7 +122,7 @@ export const createPair = async (
 export const createPool = async (
   info: PoolInfo,
   pairs: Pair[] = [],
-  useAnchor = false,
+  useAnchor = false
 ) => {
   const { poolSeed, invT, feeNum, feeDenom, decimals } = info;
   const d = state.applyD ? 10 ** decimals : 1;
@@ -129,7 +133,7 @@ export const createPool = async (
   for (const p of info.pairInfo === undefined ? [] : info.pairInfo) {
     const { call, ...pair } = await createPair(
       { decimals: p.decimals === undefined ? decimals : p.decimals, ...p },
-      useAnchor,
+      useAnchor
     );
     pairs.push(pair);
 
@@ -206,13 +210,14 @@ export const createPool = async (
   }
 
   async function rpc(opts = {}) {
-    const signedTransaction =
-      await state.provider.wallet.signTransaction(transaction);
+    const signedTransaction = await state.provider.wallet.signTransaction(
+      transaction
+    );
     const txHash = await state.provider.connection.sendRawTransaction(
       signedTransaction.serialize(),
       {
         maxRetries: 20,
-      },
+      }
     );
     await state.provider.connection.confirmTransaction(txHash, "confirmed");
     return txHash;
@@ -356,7 +361,7 @@ export const setNumeraireStatus = async (status: number) => {
 };
 
 export const setNumeraireWhitelistedPoolCreator = async (
-  creator: PublicKey,
+  creator: PublicKey
 ) => {
   const call = await state.program.methods
     .setNumeraireWhitelistedPoolCreator({ whitelistedAddr: creator })
@@ -388,6 +393,25 @@ export const compound = async ({
     .accounts(accounts)
     .remainingAccounts(remainingAccounts)
     .preInstructions(preInstructions);
+
+  return { call };
+};
+
+export const setWeights = async (data: {
+  pool: PublicKey;
+  weights: number[];
+}) => {
+  if (data.weights.length !== MAX_STABLES_PER_POOL)
+    throw new Error(
+      `Weights length should be equal to ${MAX_STABLES_PER_POOL}`
+    );
+
+  const call = await state.program.methods
+    .setWeights({ weights: data.weights })
+    .accounts({
+      payer: state.wallet.publicKey,
+      pool: data.pool,
+    } as any);
 
   return { call };
 };
