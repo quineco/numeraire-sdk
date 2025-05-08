@@ -415,3 +415,19 @@ export const setWeights = async (data: {
 
   return { call };
 };
+
+export const setProtocolFeeProportion = async (proportion: number) => {
+  const call = await state.program.methods
+      .setProtocolFeeProportion({ proportion: new BN(proportion) })
+      .accounts({ pairMint: null });
+
+  return { call };
+};
+
+export const setFeeReceiverAuthority = async (authority: PublicKey) => {
+  const call = await state.program.methods
+      .setFeeReceiverAuthority({ authority })
+      .accounts({ pairMint: null });
+
+  return { call };
+};

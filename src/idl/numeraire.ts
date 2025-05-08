@@ -1,3 +1,4 @@
+
 /**
  * Program IDL in camelCase format in order to be used in JS/TS.
  *
@@ -1002,6 +1003,66 @@ export type Numeraire = {
       ]
     },
     {
+      "name": "setFeeReceiverAuthority",
+      "discriminator": [
+        101,
+        188,
+        124,
+        75,
+        205,
+        8,
+        28,
+        114
+      ],
+      "accounts": [
+        {
+          "name": "numeraireConfig",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pairMint",
+          "optional": true
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "data",
+          "type": {
+            "defined": {
+              "name": "setFeeReceiverAuthorityData"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "setInvTMax",
       "discriminator": [
         218,
@@ -1383,6 +1444,66 @@ export type Numeraire = {
       ]
     },
     {
+      "name": "setProtocolFeeProportion",
+      "discriminator": [
+        206,
+        199,
+        239,
+        77,
+        173,
+        101,
+        123,
+        224
+      ],
+      "accounts": [
+        {
+          "name": "numeraireConfig",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pairMint",
+          "optional": true
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "systemProgram",
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "data",
+          "type": {
+            "defined": {
+              "name": "setProtocolFeeProportionData"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "setRate",
       "discriminator": [
         99,
@@ -1478,47 +1599,6 @@ export type Numeraire = {
           "type": {
             "defined": {
               "name": "setStatusData"
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "setWeights",
-      "discriminator": [
-        25,
-        58,
-        193,
-        19,
-        186,
-        84,
-        236,
-        187
-      ],
-      "accounts": [
-        {
-          "name": "pool",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "pool"
-              }
-            ]
-          }
-        },
-        {
-          "name": "payer",
-          "signer": true
-        }
-      ],
-      "args": [
-        {
-          "name": "data",
-          "type": {
-            "defined": {
-              "name": "setWeightsData"
             }
           }
         }
@@ -1795,6 +1875,10 @@ export type Numeraire = {
         {
           "name": "token2022Program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "feeReceiver",
+          "writable": true
         }
       ],
       "args": [
@@ -1895,6 +1979,10 @@ export type Numeraire = {
         {
           "name": "token2022Program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "feeReceiver",
+          "writable": true
         }
       ],
       "args": [
@@ -1995,6 +2083,10 @@ export type Numeraire = {
         {
           "name": "token2022Program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "feeReceiver",
+          "writable": true
         }
       ],
       "args": [
@@ -2095,6 +2187,10 @@ export type Numeraire = {
         {
           "name": "token2022Program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "feeReceiver",
+          "writable": true
         }
       ],
       "args": [
@@ -2195,6 +2291,10 @@ export type Numeraire = {
         {
           "name": "token2022Program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "feeReceiver",
+          "writable": true
         }
       ],
       "args": [
@@ -2491,8 +2591,8 @@ export type Numeraire = {
     },
     {
       "code": 6034,
-      "name": "missingAccount",
-      "msg": "Missing account"
+      "name": "incorrectFeeReceiver",
+      "msg": "Incorrect fee receiver"
     }
   ],
   "types": [
@@ -2861,6 +2961,21 @@ export type Numeraire = {
       }
     },
     {
+      "name": "setFeeReceiverAuthorityData",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
       "name": "setInvTMaxData",
       "repr": {
         "kind": "c"
@@ -2914,6 +3029,21 @@ export type Numeraire = {
       }
     },
     {
+      "name": "setProtocolFeeProportionData",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "proportion",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "setRateData",
       "repr": {
         "kind": "c"
@@ -2947,26 +3077,6 @@ export type Numeraire = {
           {
             "name": "status",
             "type": "u32"
-          }
-        ]
-      }
-    },
-    {
-      "name": "setWeightsData",
-      "repr": {
-        "kind": "c"
-      },
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "weights",
-            "type": {
-              "array": [
-                "u32",
-                10
-              ]
-            }
           }
         ]
       }
