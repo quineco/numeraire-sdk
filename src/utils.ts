@@ -25,6 +25,7 @@ const NodeWallet = require("@coral-xyz/anchor/dist/cjs/nodewallet").default;
 import { Numeraire } from "./idl/numeraire";
 import { InitProps } from "./type";
 import { addComputeInstructions } from "@solana-developers/helpers";
+import { NORMALIZED_VALUE_DECIMALS, SYMPY_URL } from "./constant";
 
 export const state: {
   wallet: typeof NodeWallet;
@@ -228,4 +229,31 @@ export const buildOptimalTransaction = async (
   }).compileToV0Message(lookupTables);
   const tx = new VersionedTransaction(msg);
   return tx;
+};
+
+export const getTrueAlpha = async (A: number, a: number) => {
+  // Calculate normalized values using the same logic as before
+  const normalizedA = state.applyD
+    ? A
+    : A / Math.pow(10, NORMALIZED_VALUE_DECIMALS);
+  const normalizedAb = state.applyD
+    ? a
+    : a / Math.pow(10, NORMALIZED_VALUE_DECIMALS);
+
+  const url = SYMPY_URL(normalizedA, normalizedAb);
+
+  try {
+    const result = await fetch(url);
+
+    if (!result.ok) {
+      throw new Error(`Request failed with status ${result.status}`);
+    }
+
+    const data = await result.json();
+
+    return parseFloat(data["result"]);
+  } catch (error) {
+    console.error(`Error getting true alpha: ${error.message}`);
+    throw error;
+  }
 };
