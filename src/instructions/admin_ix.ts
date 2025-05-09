@@ -346,7 +346,12 @@ export const compound = async ({
   requireCuIx?: boolean;
   cuLimit?: number;
 }) => {
-  const { accounts, remainingAccounts } = await getLiqAccounts(pool);
+  const { accounts, remainingAccounts } = await getLiqAccounts(
+    pool,
+    undefined,
+    [],
+    { isCompound: true }
+  );
 
   const preInstructions = requireCuIx
     ? [
@@ -431,4 +436,20 @@ export const setBondingCurveParameters = async (
   const keys = await call.pubkeys();
 
   return { call, ...keys };
+};
+
+export const setProtocolFeeProportion = async (proportion: number) => {
+  const call = await state.program.methods
+    .setProtocolFeeProportion({ proportion: new BN(proportion) })
+    .accounts({ pairMint: null });
+
+  return { call };
+};
+
+export const setFeeReceiverAuthority = async (authority: PublicKey) => {
+  const call = await state.program.methods
+    .setFeeReceiverAuthority({ authority })
+    .accounts({ pairMint: null });
+
+  return { call };
 };
