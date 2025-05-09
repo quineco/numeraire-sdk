@@ -1037,6 +1037,66 @@
       ]
     },
     {
+      "name": "set_fee_receiver_authority",
+      "discriminator": [
+        101,
+        188,
+        124,
+        75,
+        205,
+        8,
+        28,
+        114
+      ],
+      "accounts": [
+        {
+          "name": "numeraire_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pair_mint",
+          "optional": true
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "data",
+          "type": {
+            "defined": {
+              "name": "SetFeeReceiverAuthorityData"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "set_inv_t_max",
       "discriminator": [
         218,
@@ -1412,6 +1472,66 @@
           "type": {
             "defined": {
               "name": "SetOwnerData"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "set_protocol_fee_proportion",
+      "discriminator": [
+        206,
+        199,
+        239,
+        77,
+        173,
+        101,
+        123,
+        224
+      ],
+      "accounts": [
+        {
+          "name": "numeraire_config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "pair_mint",
+          "optional": true
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "docs": [
+            "Solana ecosystem accounts"
+          ],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "data",
+          "type": {
+            "defined": {
+              "name": "SetProtocolFeeProportionData"
             }
           }
         }
@@ -1830,6 +1950,10 @@
         {
           "name": "token_2022_program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "fee_receiver",
+          "writable": true
         }
       ],
       "args": [
@@ -1930,6 +2054,10 @@
         {
           "name": "token_2022_program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "fee_receiver",
+          "writable": true
         }
       ],
       "args": [
@@ -2030,6 +2158,10 @@
         {
           "name": "token_2022_program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "fee_receiver",
+          "writable": true
         }
       ],
       "args": [
@@ -2130,6 +2262,10 @@
         {
           "name": "token_2022_program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "fee_receiver",
+          "writable": true
         }
       ],
       "args": [
@@ -2230,6 +2366,10 @@
         {
           "name": "token_2022_program",
           "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "fee_receiver",
+          "writable": true
         }
       ],
       "args": [
@@ -2531,6 +2671,11 @@
     },
     {
       "code": 6035,
+      "name": "IncorrectFeeReceiver",
+      "msg": "Incorrect fee receiver"
+    },
+    {
+      "code": 6036,
       "name": "InvalidPairIndex",
       "msg": "Invalid pair index"
     }
@@ -2883,9 +3028,6 @@
     },
     {
       "name": "SetBondingCurveData",
-      "repr": {
-        "kind": "c"
-      },
       "type": {
         "kind": "struct",
         "fields": [
@@ -2950,6 +3092,21 @@
       }
     },
     {
+      "name": "SetFeeReceiverAuthorityData",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
       "name": "SetInvTMaxData",
       "repr": {
         "kind": "c"
@@ -2998,6 +3155,21 @@
           {
             "name": "owner",
             "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SetProtocolFeeProportionData",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "proportion",
+            "type": "u64"
           }
         ]
       }
