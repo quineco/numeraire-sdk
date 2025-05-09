@@ -17,7 +17,7 @@ import {
   NORMALIZED_VALUE_DECIMALS,
 } from "./../constant";
 import { MyAccount, Pair, PairInfo, PoolInfo } from "../type";
-import { f64ToU64_LittleEndian, state } from "../utils";
+import {f64ToU64_LittleEndian, getTrueAlpha, state} from "../utils";
 import { getLiqAccounts } from "../getters";
 import { exec } from "child_process";
 import fetch from "node-fetch";
@@ -414,6 +414,72 @@ export const setWeights = async (data: {
     } as any);
 
   return { call };
+};
+
+export const setProtocolFeeProportion = async (proportion: number) => {
+  const call = await state.program.methods
+      .setProtocolFeeProportion({ proportion: new BN(proportion) })
+      .accounts({ pairMint: null });
+
+  return { call };
+};
+
+export const setFeeReceiverAuthority = async (authority: PublicKey) => {
+  const call = await state.program.methods
+      .setFeeReceiverAuthority({ authority })
+      .accounts({ pairMint: null });
+
+  return { call };
+};
+
+export const setBondingCurveParameters = async (
+    { A, a, b, decimals, alpha, beta }: PairInfo,
+    pool: PublicKey,
+    pairIndex: number,
+    newUpperA: number | undefined,
+    newLowerA: number | undefined,
+    newLowerB: number | undefined,
+    newAlpha: number | undefined,
+    newBeta: number | undefined
+) => {
+  // Either take the old valud or the new one if provided
+  A = newUpperA || A;
+  a = newLowerA || a;
+  b = newLowerB || b;
+  alpha = newAlpha || alpha;
+  beta = newBeta || beta;
+
+  if (typeof decimals !== "number") throw new Error("Decimals required");
+
+  const d = state.applyD ? 10 ** decimals : 1;
+
+  if (a !== b || beta !== 1 / alpha) throw new Error("need a=b");
+
+  let trueAlpha: number = await getTrueAlpha(A, a);
+
+  if (Math.abs(trueAlpha - alpha) > 0.00001)
+    throw new Error(`Expected alpha = ${alpha}, computed alpha = ${trueAlpha}`);
+
+  const dNorm = state.applyD ? 10 ** NORMALIZED_VALUE_DECIMALS : 1;
+
+  const call = await state.program.methods
+      .setBondingCurveParametersForPair({
+        pairIndex,
+        trueAlpha: new BN(f64ToU64_LittleEndian(trueAlpha)),
+        curveAmp: new BN(A * dNorm),
+        curveA: new BN(a * dNorm),
+        curveB: new BN(b * dNorm),
+        curveAlpha: new BN(f64ToU64_LittleEndian(trueAlpha)),
+        curveBeta: new BN(f64ToU64_LittleEndian(1 / trueAlpha)),
+      })
+      .accounts({
+        pool,
+        payer: state.wallet.publicKey,
+      } as any);
+
+  const keys = await call.pubkeys();
+
+  return { call, ...keys };
 };
 
 export const setProtocolFeeProportion = async (proportion: number) => {
