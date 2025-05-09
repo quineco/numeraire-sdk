@@ -1,4 +1,3 @@
-
 /**
  * Program IDL in camelCase format in order to be used in JS/TS.
  *
@@ -1605,6 +1604,47 @@ export type Numeraire = {
       ]
     },
     {
+      "name": "setWeights",
+      "discriminator": [
+        25,
+        58,
+        193,
+        19,
+        186,
+        84,
+        236,
+        187
+      ],
+      "accounts": [
+        {
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "data",
+          "type": {
+            "defined": {
+              "name": "setWeightsData"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "setWhitelistedAdder",
       "discriminator": [
         74,
@@ -2591,6 +2631,11 @@ export type Numeraire = {
     },
     {
       "code": 6034,
+      "name": "missingAccount",
+      "msg": "Missing account"
+    },
+    {
+      "code": 6035,
       "name": "incorrectFeeReceiver",
       "msg": "Incorrect fee receiver"
     }
@@ -3077,6 +3122,26 @@ export type Numeraire = {
           {
             "name": "status",
             "type": "u32"
+          }
+        ]
+      }
+    },
+    {
+      "name": "setWeightsData",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "weights",
+            "type": {
+              "array": [
+                "u32",
+                10
+              ]
+            }
           }
         ]
       }
