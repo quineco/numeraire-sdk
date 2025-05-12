@@ -955,6 +955,93 @@
       "returns": "u64"
     },
     {
+      "name": "replace_pool_token",
+      "discriminator": [
+        161,
+        238,
+        54,
+        16,
+        252,
+        48,
+        193,
+        114
+      ],
+      "accounts": [
+        {
+          "name": "pool",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "pool"
+              }
+            ]
+          }
+        },
+        {
+          "name": "new_vsp",
+          "writable": true
+        },
+        {
+          "name": "old_token_vault",
+          "writable": true
+        },
+        {
+          "name": "old_token_receiver",
+          "writable": true
+        },
+        {
+          "name": "old_mint"
+        },
+        {
+          "name": "numeraire_config",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "payer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "token_program_2022",
+          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "data",
+          "type": {
+            "defined": {
+              "name": "ReplacePoolTokenData"
+            }
+          }
+        }
+      ]
+    },
+    {
       "name": "set_bonding_curve_parameters_for_pair",
       "discriminator": [
         243,
@@ -3021,6 +3108,21 @@
           },
           {
             "name": "out_index",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ReplacePoolTokenData",
+      "repr": {
+        "kind": "c"
+      },
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "pair_index",
             "type": "u8"
           }
         ]

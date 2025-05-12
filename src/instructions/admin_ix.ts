@@ -14,7 +14,7 @@ import { BN } from "bn.js";
 import { MAX_STABLES_PER_POOL, NORMALIZED_VALUE_DECIMALS } from "./../constant";
 import { MyAccount, Pair, PairInfo, PoolInfo } from "../type";
 import { f64ToU64_LittleEndian, getTrueAlpha, state } from "../utils";
-import { getLiqAccounts } from "../getters";
+import {getLiqAccounts, getPoolKeys, getPoolState} from "../getters";
 
 export const createPair = async (
   {
@@ -450,6 +450,26 @@ export const setFeeReceiverAuthority = async (authority: PublicKey) => {
   const call = await state.program.methods
     .setFeeReceiverAuthority({ authority })
     .accounts({ pairMint: null });
+
+  return { call };
+};
+
+export const replacePoolToken = async (idx: number, pool: PublicKey, oldTokenRecipient: PublicKey, newVsp: PublicKey) => {
+  let poolInfo = await getPoolKeys(pool);
+  let vsp = poolInfo.pairs[idx];
+  let obj = {
+    payer: state.wallet.publicKey,
+    oldMint: vsp.xMint,
+    oldTokenReceiver: oldTokenRecipient,
+    oldTokenVault: vsp.xVault,
+    newVsp: newVsp,
+    pool: pool,
+  };
+  const call = state.program.methods
+      .replacePoolToken({
+        pairIndex: idx,
+      })
+      .accounts(obj);
 
   return { call };
 };
