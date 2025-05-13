@@ -26,6 +26,7 @@ import { Numeraire } from "./idl/numeraire";
 import { InitProps } from "./type";
 import { addComputeInstructions } from "@solana-developers/helpers";
 import { NORMALIZED_VALUE_DECIMALS, SYMPY_URL } from "./constant";
+import fetch from "node-fetch";
 
 export const state: {
   wallet: typeof NodeWallet;
