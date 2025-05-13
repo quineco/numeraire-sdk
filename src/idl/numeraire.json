@@ -1010,7 +1010,29 @@
         },
         {
           "name": "new_vault",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "new_vsp"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  105,
+                  113,
+                  117,
+                  105,
+                  100,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
         },
         {
           "name": "old_token_vault",

@@ -1016,7 +1016,29 @@ export type Numeraire = {
         },
         {
           "name": "newVault",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "newVsp"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  108,
+                  105,
+                  113,
+                  117,
+                  105,
+                  100,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
         },
         {
           "name": "oldTokenVault",
@@ -3863,4 +3885,3 @@ export type Numeraire = {
     }
   ]
 };
-
