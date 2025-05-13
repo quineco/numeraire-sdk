@@ -14,7 +14,7 @@ import { BN } from "bn.js";
 import { MAX_STABLES_PER_POOL, NORMALIZED_VALUE_DECIMALS } from "./../constant";
 import { MyAccount, Pair, PairInfo, PoolInfo } from "../type";
 import { f64ToU64_LittleEndian, getTrueAlpha, state } from "../utils";
-import {getLiqAccounts, getPoolKeys, getPoolState} from "../getters";
+import { getLiqAccounts, getPoolKeys, getPoolState } from "../getters";
 
 export const createPair = async (
   {
@@ -239,29 +239,21 @@ export const setLpTokenMetadata = async ({
 };
 
 export const setRate = async (data: {
-  rateMint: PublicKey;
+  pool: PublicKey;
+  pairIndex: number;
   rateNum?: number;
   rateDenom?: number;
 }) => {
-  const readFromMint = data.rateNum === undefined;
-
-  if (readFromMint != (data.rateDenom === undefined))
-    throw new Error("Both num and denom should be provided or elided");
-
-  let call;
-  if (readFromMint) {
-    call = await state.program.methods
-      .setRate({ rateMint: data.rateMint, rateNum: 0, rateDenom: 0 })
-      .accounts({ pairMint: data.rateMint });
-  } else {
-    call = await state.program.methods
-      .setRate({
-        rateMint: data.rateMint,
-        rateNum: data.rateNum,
-        rateDenom: data.rateDenom,
-      })
-      .accounts({ pairMint: null });
-  }
+  let call = await state.program.methods
+    .setRate({
+      rateMint: data.pairIndex,
+      rateNum: data.rateNum,
+      rateDenom: data.rateDenom,
+    })
+    .accounts({
+      pool: data.pool,
+      payer: state.wallet.publicKey,
+    });
 
   return { call };
 };
@@ -454,7 +446,12 @@ export const setFeeReceiverAuthority = async (authority: PublicKey) => {
   return { call };
 };
 
-export const replacePoolToken = async (idx: number, pool: PublicKey, oldTokenRecipient: PublicKey, newVsp: PublicKey) => {
+export const replacePoolToken = async (
+  idx: number,
+  pool: PublicKey,
+  oldTokenRecipient: PublicKey,
+  newVsp: PublicKey
+) => {
   let poolInfo = await getPoolKeys(pool);
   let vsp = poolInfo.pairs[idx];
   let obj = {
@@ -466,10 +463,10 @@ export const replacePoolToken = async (idx: number, pool: PublicKey, oldTokenRec
     pool: pool,
   };
   const call = state.program.methods
-      .replacePoolToken({
-        pairIndex: idx,
-      })
-      .accounts(obj);
+    .replacePoolToken({
+      pairIndex: idx,
+    })
+    .accounts(obj);
 
   return { call };
 };
