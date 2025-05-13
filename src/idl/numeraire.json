@@ -955,93 +955,6 @@
       "returns": "u64"
     },
     {
-      "name": "replace_pool_token",
-      "discriminator": [
-        161,
-        238,
-        54,
-        16,
-        252,
-        48,
-        193,
-        114
-      ],
-      "accounts": [
-        {
-          "name": "pool",
-          "writable": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "account",
-                "path": "pool"
-              }
-            ]
-          }
-        },
-        {
-          "name": "new_vsp",
-          "writable": true
-        },
-        {
-          "name": "old_token_vault",
-          "writable": true
-        },
-        {
-          "name": "old_token_receiver",
-          "writable": true
-        },
-        {
-          "name": "old_mint"
-        },
-        {
-          "name": "numeraire_config",
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
-                ]
-              }
-            ]
-          }
-        },
-        {
-          "name": "payer",
-          "writable": true,
-          "signer": true
-        },
-        {
-          "name": "token_program",
-          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
-        },
-        {
-          "name": "token_program_2022",
-          "address": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb"
-        },
-        {
-          "name": "system_program",
-          "address": "11111111111111111111111111111111"
-        }
-      ],
-      "args": [
-        {
-          "name": "data",
-          "type": {
-            "defined": {
-              "name": "ReplacePoolTokenData"
-            }
-          }
-        }
-      ]
-    },
-    {
       "name": "set_bonding_curve_parameters_for_pair",
       "discriminator": [
         243,
@@ -1065,6 +978,10 @@
               }
             ]
           }
+        },
+        {
+          "name": "pair_mint",
+          "optional": true
         },
         {
           "name": "payer",
@@ -1106,6 +1023,10 @@
               }
             ]
           }
+        },
+        {
+          "name": "pair_mint",
+          "optional": true
         },
         {
           "name": "payer",
@@ -1207,6 +1128,10 @@
               }
             ]
           }
+        },
+        {
+          "name": "pair_mint",
+          "optional": true
         },
         {
           "name": "payer",
@@ -1549,6 +1474,10 @@
           }
         },
         {
+          "name": "pair_mint",
+          "optional": true
+        },
+        {
           "name": "payer",
           "signer": true
         }
@@ -1638,20 +1567,13 @@
       ],
       "accounts": [
         {
-          "name": "numeraire_config",
+          "name": "pool",
           "writable": true,
           "pda": {
             "seeds": [
               {
-                "kind": "const",
-                "value": [
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
-                ]
+                "kind": "account",
+                "path": "pool"
               }
             ]
           }
@@ -1662,15 +1584,7 @@
         },
         {
           "name": "payer",
-          "writable": true,
           "signer": true
-        },
-        {
-          "name": "system_program",
-          "docs": [
-            "Solana ecosystem accounts"
-          ],
-          "address": "11111111111111111111111111111111"
         }
       ],
       "args": [
@@ -1708,6 +1622,10 @@
               }
             ]
           }
+        },
+        {
+          "name": "pair_mint",
+          "optional": true
         },
         {
           "name": "payer",
@@ -1751,6 +1669,10 @@
           }
         },
         {
+          "name": "pair_mint",
+          "optional": true
+        },
+        {
           "name": "payer",
           "signer": true
         }
@@ -1790,6 +1712,10 @@
               }
             ]
           }
+        },
+        {
+          "name": "pair_mint",
+          "optional": true
         },
         {
           "name": "payer",
@@ -2765,6 +2691,11 @@
       "code": 6036,
       "name": "InvalidPairIndex",
       "msg": "Invalid pair index"
+    },
+    {
+      "code": 6037,
+      "name": "InvalidPairParams",
+      "msg": "Invalid pair params"
     }
   ],
   "types": [
@@ -2948,6 +2879,14 @@
           {
             "name": "pair_seed",
             "type": "pubkey"
+          },
+          {
+            "name": "rate_num",
+            "type": "u32"
+          },
+          {
+            "name": "rate_denom",
+            "type": "u32"
           }
         ]
       }
@@ -2970,7 +2909,7 @@
             "type": "u32"
           },
           {
-            "name": "rate_mints",
+            "name": "_rate_mints",
             "type": {
               "array": [
                 "pubkey",
@@ -2979,7 +2918,7 @@
             }
           },
           {
-            "name": "rate_nums",
+            "name": "_rate_nums",
             "type": {
               "array": [
                 "u32",
@@ -2988,7 +2927,7 @@
             }
           },
           {
-            "name": "rate_denoms",
+            "name": "_rate_denoms",
             "type": {
               "array": [
                 "u32",
@@ -3108,21 +3047,6 @@
           },
           {
             "name": "out_index",
-            "type": "u8"
-          }
-        ]
-      }
-    },
-    {
-      "name": "ReplacePoolTokenData",
-      "repr": {
-        "kind": "c"
-      },
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "pair_index",
             "type": "u8"
           }
         ]
@@ -3285,8 +3209,8 @@
         "kind": "struct",
         "fields": [
           {
-            "name": "rate_mint",
-            "type": "pubkey"
+            "name": "pair_index",
+            "type": "u8"
           },
           {
             "name": "rate_num",
@@ -3728,11 +3652,11 @@
             "type": "u64"
           },
           {
-            "name": "newest_rate_num",
+            "name": "rate_num",
             "type": "u32"
           },
           {
-            "name": "newest_rate_denom",
+            "name": "rate_denom",
             "type": "u32"
           },
           {
