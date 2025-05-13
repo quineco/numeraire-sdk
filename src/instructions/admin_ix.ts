@@ -11,7 +11,11 @@ import {
   getAssociatedTokenAddressSync,
 } from "@solana/spl-token";
 import { BN } from "bn.js";
-import { MAX_STABLES_PER_POOL, NORMALIZED_VALUE_DECIMALS } from "./../constant";
+import {
+  MAX_STABLES_PER_POOL,
+  NORMALIZED_VALUE_DECIMALS,
+  NUMERAIRE_CONFIG_ID,
+} from "./../constant";
 import { MyAccount, Pair, PairInfo, PoolInfo } from "../type";
 import { f64ToU64_LittleEndian, getTrueAlpha, state } from "../utils";
 import {getLiqAccounts, getPairState, getPoolKeys, getPoolState} from "../getters";
@@ -205,7 +209,7 @@ export const setWhitelistedAdder = async ({
 }) => {
   const call = await state.program.methods
     .setWhitelistedAdder({ whitelistedAddr: adder })
-    .accounts({ pool } as any);
+    .accounts({ pool, pairMint: null, numeraireConfig: null } as any);
 
   return { call };
 };
@@ -219,7 +223,7 @@ export const setPoolStatus = async ({
 }) => {
   const call = await state.program.methods
     .setStatus({ status })
-    .accounts({ pool } as any);
+    .accounts({ pool, pairMint: null, numeraireConfig: null } as any);
 
   return { call };
 };
@@ -247,6 +251,7 @@ export const setRate = async (data: {
   pairIndex: number;
   rateNum: number;
   rateDenom: number;
+  pairMint?: PublicKey;
 }) => {
   let call = await state.program.methods
     .setRate({
@@ -257,7 +262,34 @@ export const setRate = async (data: {
     .accounts({
       pool: data.pool,
       payer: state.wallet.publicKey,
+      pairMint: data.pairMint || null,
+      numeraireConfig: null,
     } as any);
+
+  return { call };
+};
+
+export const setRateAsWPC = async (data: {
+  wpc_payer: Keypair;
+  pool: PublicKey;
+  pairIndex: number;
+  rateNum: number;
+  rateDenom: number;
+  pairMint?: PublicKey;
+}) => {
+  let call = await state.program.methods
+    .setRate({
+      pairIndex: data.pairIndex,
+      rateNum: data.rateNum,
+      rateDenom: data.rateDenom,
+    })
+    .accounts({
+      pool: data.pool,
+      payer: data.wpc_payer.publicKey,
+      pairMint: data.pairMint || null,
+      numeraireConfig: NUMERAIRE_CONFIG_ID,
+    } as any)
+    .signers([data.wpc_payer]);
 
   return { call };
 };
@@ -277,9 +309,11 @@ export const setOwner = async ({
   pool: PublicKey;
   newOwner: PublicKey;
 }) => {
-  const call = await state.program.methods
-    .setOwner({ owner: newOwner })
-    .accounts({ pool } as any);
+  const call = state.program.methods.setOwner({ owner: newOwner }).accounts({
+    pool,
+    pairMint: null,
+    numeraireConfig: null,
+  } as any);
 
   return { call };
 };
@@ -348,6 +382,8 @@ export const setWeights = async (data: {
     .accounts({
       payer: state.wallet.publicKey,
       pool: data.pool,
+      pairMint: null,
+      numeraireConfig: null,
     } as any);
 
   return { call };
@@ -396,6 +432,8 @@ export const setBondingCurveParameters = async (
     .accounts({
       pool,
       payer: state.wallet.publicKey,
+      pairMint: null,
+      numeraireConfig: null,
     } as any);
 
   const keys = await call.pubkeys();

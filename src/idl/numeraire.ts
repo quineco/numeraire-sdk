@@ -1112,6 +1112,25 @@ export type Numeraire = {
       ],
       "accounts": [
         {
+          "name": "numeraireConfig",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
           "name": "pool",
           "writable": true,
           "pda": {
@@ -1156,6 +1175,25 @@ export type Numeraire = {
         80
       ],
       "accounts": [
+        {
+          "name": "numeraireConfig",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
         {
           "name": "pool",
           "writable": true,
@@ -1261,6 +1299,25 @@ export type Numeraire = {
         58
       ],
       "accounts": [
+        {
+          "name": "numeraireConfig",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
         {
           "name": "pool",
           "writable": true,
@@ -1606,6 +1663,25 @@ export type Numeraire = {
       ],
       "accounts": [
         {
+          "name": "numeraireConfig",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
           "name": "pool",
           "writable": true,
           "pda": {
@@ -1711,6 +1787,25 @@ export type Numeraire = {
       ],
       "accounts": [
         {
+          "name": "numeraireConfig",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
           "name": "pool",
           "writable": true,
           "pda": {
@@ -1755,6 +1850,25 @@ export type Numeraire = {
         224
       ],
       "accounts": [
+        {
+          "name": "numeraireConfig",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
         {
           "name": "pool",
           "writable": true,
@@ -1801,6 +1915,25 @@ export type Numeraire = {
       ],
       "accounts": [
         {
+          "name": "numeraireConfig",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
           "name": "pool",
           "writable": true,
           "pda": {
@@ -1845,6 +1978,25 @@ export type Numeraire = {
         105
       ],
       "accounts": [
+        {
+          "name": "numeraireConfig",
+          "optional": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
         {
           "name": "pool",
           "writable": true,
