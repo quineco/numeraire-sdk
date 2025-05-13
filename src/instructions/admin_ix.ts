@@ -14,7 +14,7 @@ import { BN } from "bn.js";
 import { MAX_STABLES_PER_POOL, NORMALIZED_VALUE_DECIMALS } from "./../constant";
 import { MyAccount, Pair, PairInfo, PoolInfo } from "../type";
 import { f64ToU64_LittleEndian, getTrueAlpha, state } from "../utils";
-import { getLiqAccounts, getPoolKeys, getPoolState } from "../getters";
+import {getLiqAccounts, getPairState, getPoolKeys, getPoolState} from "../getters";
 
 export const createPair = async (
   {
@@ -423,23 +423,25 @@ export const replacePoolToken = async (
   idx: number,
   pool: PublicKey,
   oldTokenRecipient: PublicKey,
-  newVsp: PublicKey
+  newVsp: PublicKey,
 ) => {
   let poolInfo = await getPoolKeys(pool);
-  let vsp = poolInfo.pairs[idx];
-  let obj = {
-    payer: state.wallet.publicKey,
-    oldMint: vsp.xMint,
-    oldTokenReceiver: oldTokenRecipient,
-    oldTokenVault: vsp.xVault,
-    newVsp: newVsp,
-    pool: pool,
-  };
+  let oldVsp = poolInfo.pairs[idx];
+  let newVspData = await state.program.account.virtualStablePair.fetch(newVsp);
+
   const call = state.program.methods
-    .replacePoolToken({
-      pairIndex: idx,
-    })
-    .accounts(obj);
+      .replacePoolToken({
+        pairIndex: idx
+      }).accountsPartial({
+        newVsp: newVsp,
+        oldTokenVault: oldVsp.xVault,
+        oldMint: oldVsp.xMint,
+        oldTokenReceiver: oldTokenRecipient,
+        payer: state.wallet.publicKey,
+        pool: pool,
+        newVault: newVspData.xVault,
+        newPairAuthority: newVspData.pairAuthority,
+      });
 
   return { call };
 };

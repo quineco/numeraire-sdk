@@ -984,6 +984,35 @@
           "writable": true
         },
         {
+          "name": "new_pair_authority",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "account",
+                "path": "new_vsp"
+              },
+              {
+                "kind": "const",
+                "value": [
+                  97,
+                  117,
+                  116,
+                  104,
+                  111,
+                  114,
+                  105,
+                  116,
+                  121
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "new_vault",
+          "writable": true
+        },
+        {
           "name": "old_token_vault",
           "writable": true
         },
