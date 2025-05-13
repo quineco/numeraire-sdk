@@ -12,6 +12,8 @@ export interface PairInfo {
   pairSeed: PublicKey;
   alpha: number;
   beta: number;
+  rateNum: number;
+  rateDenom: number;
   decimals?: number;
   adder_token_account?: PublicKey;
 }
