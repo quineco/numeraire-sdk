@@ -28,6 +28,8 @@ export const createPair = async (
     decimals,
     alpha,
     beta,
+    rateNum,
+    rateDenom,
     adder_token_account = undefined,
   }: PairInfo,
   send = true
@@ -53,6 +55,8 @@ export const createPair = async (
       pairSeed,
       curveAlpha: new BN(f64ToU64_LittleEndian(trueAlpha)),
       curveBeta: new BN(f64ToU64_LittleEndian(1 / trueAlpha)),
+      rateNum,
+      rateDenom,
     })
     .accounts({
       xMint: mint,
@@ -241,50 +245,19 @@ export const setLpTokenMetadata = async ({
 export const setRate = async (data: {
   pool: PublicKey;
   pairIndex: number;
-  rateNum?: number;
-  rateDenom?: number;
+  rateNum: number;
+  rateDenom: number;
 }) => {
   let call = await state.program.methods
     .setRate({
-      rateMint: data.pairIndex,
+      pairIndex: data.pairIndex,
       rateNum: data.rateNum,
       rateDenom: data.rateDenom,
     })
     .accounts({
       pool: data.pool,
       payer: state.wallet.publicKey,
-    });
-
-  return { call };
-};
-
-export const setRateAsWPC = async (data: {
-  wpc_payer: Keypair;
-  rateMint: PublicKey;
-  rateNum?: number;
-  rateDenom?: number;
-}) => {
-  const readFromMint = data.rateNum === undefined;
-
-  if (readFromMint != (data.rateDenom === undefined))
-    throw new Error("Both num and denom should be provided or elided");
-
-  let call;
-  if (readFromMint) {
-    call = await state.program.methods
-      .setRate({ rateMint: data.rateMint, rateNum: 0, rateDenom: 0 })
-      .accounts({ pairMint: data.rateMint, payer: data.wpc_payer.publicKey })
-      .signers([data.wpc_payer]);
-  } else {
-    call = await state.program.methods
-      .setRate({
-        rateMint: data.rateMint,
-        rateNum: data.rateNum,
-        rateDenom: data.rateDenom,
-      })
-      .accounts({ pairMint: null, payer: data.wpc_payer.publicKey })
-      .signers([data.wpc_payer]);
-  }
+    } as any);
 
   return { call };
 };
