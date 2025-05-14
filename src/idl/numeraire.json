@@ -2986,6 +2986,11 @@
       "code": 6037,
       "name": "InvalidPairParams",
       "msg": "Invalid pair params"
+    },
+    {
+      "code": 6038,
+      "name": "PoolNotMutable",
+      "msg": "Pool is not mutable"
     }
   ],
   "types": [
