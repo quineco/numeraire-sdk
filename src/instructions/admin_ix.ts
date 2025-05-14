@@ -18,7 +18,7 @@ import {
 } from "./../constant";
 import { MyAccount, Pair, PairInfo, PoolInfo } from "../type";
 import { f64ToU64_LittleEndian, getTrueAlpha, state } from "../utils";
-import {getLiqAccounts, getPairState, getPoolKeys, getPoolState} from "../getters";
+import { getLiqAccounts, getPoolKeys } from "../getters";
 
 export const createPair = async (
   {
@@ -383,8 +383,26 @@ export const setWeights = async (data: {
       payer: state.wallet.publicKey,
       pool: data.pool,
       pairMint: null,
-      numeraireConfig: null,
+      numeraireConfig: NUMERAIRE_CONFIG_ID,
     } as any);
+
+  return { call };
+};
+
+export const setWeightsAsWPC = async (data: {
+  wpc_payer: Keypair;
+  pool: PublicKey;
+  weights: number[];
+}) => {
+  let call = await state.program.methods
+    .setWeights({ weights: data.weights })
+    .accounts({
+      payer: data.wpc_payer.publicKey,
+      pool: data.pool,
+      pairMint: null,
+      numeraireConfig: NUMERAIRE_CONFIG_ID,
+    } as any)
+    .signers([data.wpc_payer]);
 
   return { call };
 };
@@ -433,8 +451,62 @@ export const setBondingCurveParameters = async (
       pool,
       payer: state.wallet.publicKey,
       pairMint: null,
-      numeraireConfig: null,
+      numeraireConfig: NUMERAIRE_CONFIG_ID,
     } as any);
+
+  const keys = await call.pubkeys();
+
+  return { call, ...keys };
+};
+
+export const setBondingCurveParametersAsWPC = async (
+  { A, a, b, decimals, alpha, beta }: PairInfo,
+  wpc_payer: Keypair,
+  pool: PublicKey,
+  pairIndex: number,
+  newUpperA: number | undefined,
+  newLowerA: number | undefined,
+  newLowerB: number | undefined,
+  newAlpha: number | undefined,
+  newBeta: number | undefined
+) => {
+  // Either take the old valud or the new one if provided
+  A = newUpperA || A;
+  a = newLowerA || a;
+  b = newLowerB || b;
+  alpha = newAlpha || alpha;
+  beta = newBeta || beta;
+
+  if (typeof decimals !== "number") throw new Error("Decimals required");
+
+  const d = state.applyD ? 10 ** decimals : 1;
+
+  if (a !== b || beta !== 1 / alpha) throw new Error("need a=b");
+
+  let trueAlpha: number = await getTrueAlpha(A, a);
+
+  if (Math.abs(trueAlpha - alpha) > 0.00001)
+    throw new Error(`Expected alpha = ${alpha}, computed alpha = ${trueAlpha}`);
+
+  const dNorm = state.applyD ? 10 ** NORMALIZED_VALUE_DECIMALS : 1;
+
+  const call = await state.program.methods
+    .setBondingCurveParametersForPair({
+      pairIndex,
+      trueAlpha: new BN(f64ToU64_LittleEndian(trueAlpha)),
+      curveAmp: new BN(A * dNorm),
+      curveA: new BN(a * dNorm),
+      curveB: new BN(b * dNorm),
+      curveAlpha: new BN(f64ToU64_LittleEndian(trueAlpha)),
+      curveBeta: new BN(f64ToU64_LittleEndian(1 / trueAlpha)),
+    })
+    .accounts({
+      pool,
+      payer: wpc_payer.publicKey,
+      pairMint: null,
+      numeraireConfig: NUMERAIRE_CONFIG_ID,
+    } as any)
+    .signers([wpc_payer]);
 
   const keys = await call.pubkeys();
 
@@ -461,25 +533,26 @@ export const replacePoolToken = async (
   idx: number,
   pool: PublicKey,
   oldTokenRecipient: PublicKey,
-  newVsp: PublicKey,
+  newVsp: PublicKey
 ) => {
   let poolInfo = await getPoolKeys(pool);
   let oldVsp = poolInfo.pairs[idx];
   let newVspData = await state.program.account.virtualStablePair.fetch(newVsp);
 
   const call = state.program.methods
-      .replacePoolToken({
-        pairIndex: idx
-      }).accountsPartial({
-        newVsp: newVsp,
-        oldTokenVault: oldVsp.xVault,
-        oldMint: oldVsp.xMint,
-        oldTokenReceiver: oldTokenRecipient,
-        payer: state.wallet.publicKey,
-        pool: pool,
-        newVault: newVspData.xVault,
-        newPairAuthority: newVspData.pairAuthority,
-      });
+    .replacePoolToken({
+      pairIndex: idx,
+    })
+    .accountsPartial({
+      newVsp: newVsp,
+      oldTokenVault: oldVsp.xVault,
+      oldMint: oldVsp.xMint,
+      oldTokenReceiver: oldTokenRecipient,
+      payer: state.wallet.publicKey,
+      pool: pool,
+      newVault: newVspData.xVault,
+      newPairAuthority: newVspData.pairAuthority,
+    });
 
   return { call };
 };
