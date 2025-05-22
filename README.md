@@ -6,6 +6,21 @@ An SDK to build on top of Numeraire.
 
 NUMERUNsFCP3kuNmWZuXtm1AaQCPj9uw6Guv2Ekoi5P
 
+## NPM
+Just run, this will take care of committing and tagging:
+```bash
+npm version patch
+#or 
+npm version minor
+#or
+npm version major
+```
+
+Then
+```bash
+npm publish
+```
+
 ## User Guide
 
 ### Installation
