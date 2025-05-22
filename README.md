@@ -18,6 +18,11 @@ npm version major
 
 Then
 ```bash
+git push --tags
+```
+
+Finally
+```bash
 npm publish
 ```
 
