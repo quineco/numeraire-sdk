@@ -1170,25 +1170,6 @@
       ],
       "accounts": [
         {
-          "name": "numeraire_config",
-          "optional": true,
-          "pda": {
-            "seeds": [
-              {
-                "kind": "const",
-                "value": [
-                  99,
-                  111,
-                  110,
-                  102,
-                  105,
-                  103
-                ]
-              }
-            ]
-          }
-        },
-        {
           "name": "pool",
           "writable": true,
           "pda": {
@@ -1199,10 +1180,6 @@
               }
             ]
           }
-        },
-        {
-          "name": "pair_mint",
-          "optional": true
         },
         {
           "name": "payer",

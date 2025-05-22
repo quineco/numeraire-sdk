@@ -937,18 +937,6 @@ export type Numeraire = {
       discriminator: [18, 154, 24, 18, 237, 214, 19, 80];
       accounts: [
         {
-          name: "numeraireConfig";
-          optional: true;
-          pda: {
-            seeds: [
-              {
-                kind: "const";
-                value: [99, 111, 110, 102, 105, 103];
-              }
-            ];
-          };
-        },
-        {
           name: "pool";
           writable: true;
           pda: {
@@ -959,10 +947,6 @@ export type Numeraire = {
               }
             ];
           };
-        },
-        {
-          name: "pairMint";
-          optional: true;
         },
         {
           name: "payer";
